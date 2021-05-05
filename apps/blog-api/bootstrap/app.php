@@ -40,12 +40,12 @@ $app = new Laravel\Lumen\Application(
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    Apps\BlogApi\Exceptions\Handler::class
+    Apps\BlogApi\App\Exceptions\Handler::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    Apps\BlogApi\Console\Kernel::class
+    Apps\BlogApi\App\Console\Kernel::class
 );
 
 /*
@@ -73,11 +73,11 @@ $app->configure('app');
 */
 
 // $app->middleware([
-//     Apps\BlogApi\Http\Middleware\ExampleMiddleware::class
+//     Apps\BlogApi\App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
 // $app->routeMiddleware([
-//     'auth' => Apps\BlogApi\Http\Middleware\Authenticate::class,
+//     'auth' => Apps\BlogApi\App\Http\Middleware\Authenticate::class,
 // ]);
 
 /*
@@ -91,9 +91,9 @@ $app->configure('app');
 |
 */
 
-// $app->register(Apps\BlogApi\Providers\AppServiceProvider::class);
-// $app->register(Apps\BlogApi\Providers\AuthServiceProvider::class);
-// $app->register(Apps\BlogApi\Providers\EventServiceProvider::class);
+// $app->register(Apps\BlogApi\App\Providers\AppServiceProvider::class);
+// $app->register(Apps\BlogApi\App\Providers\AuthServiceProvider::class);
+// $app->register(Apps\BlogApi\App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -107,7 +107,7 @@ $app->configure('app');
 */
 
 $app->router->group([
-    'namespace' => 'Apps\BlogApi\Http\Controllers',
+    'namespace' => 'Apps\BlogApi\App\Http\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });

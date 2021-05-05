@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\BlogApi\Providers;
+namespace Apps\BlogApi\App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

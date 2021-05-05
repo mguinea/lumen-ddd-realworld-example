@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\BlogApi\Events;
+namespace Apps\BlogApi\App\Events;
 
 class ExampleEvent extends Event
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\BlogApi\Http\Middleware;
+namespace Apps\BlogApi\App\Http\Middleware;
 
 use Closure;
 

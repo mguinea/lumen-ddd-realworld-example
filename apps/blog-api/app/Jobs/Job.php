@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\BlogApi\Jobs;
+namespace Apps\BlogApi\App\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\BlogApi\Http\Controllers;
+namespace Apps\BlogApi\App\Http\Controllers;
 
 class ExampleController extends Controller
 {

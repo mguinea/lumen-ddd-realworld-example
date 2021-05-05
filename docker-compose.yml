@@ -36,7 +36,7 @@ services:
       - .env
     depends_on:
       - blog-api.db
-    command: php -S localhost:8880 -t apps/blog-api/public
+    command: php -S blog-api.app:8880 -t apps/blog-api/public
     networks:
       - lumen-ddd-realworld-example-network
 

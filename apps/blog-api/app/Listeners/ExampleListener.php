@@ -1,8 +1,8 @@
 <?php
 
-namespace Apps\BlogApi\Listeners;
+namespace Apps\BlogApi\App\Listeners;
 
-use Apps\BlogApi\Events\ExampleEvent;
+use Apps\BlogApi\App\Events\ExampleEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -21,7 +21,7 @@ class ExampleListener
     /**
      * Handle the event.
      *
-     * @param  \Apps\BlogApi\Events\ExampleEvent  $event
+     * @param  \Apps\BlogApi\App\Events\ExampleEvent  $event
      * @return void
      */
     public function handle(ExampleEvent $event)

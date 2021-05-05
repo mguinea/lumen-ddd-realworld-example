@@ -1,6 +1,6 @@
 <?php
 
-namespace Apps\BlogApi\Console;
+namespace Apps\BlogApi\App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;

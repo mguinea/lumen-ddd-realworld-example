@@ -1,8 +1,8 @@
 <?php
 
-namespace Apps\BlogApi\Providers;
+namespace Apps\BlogApi\App\Providers;
 
-use Apps\BlogApi\Models\User;
+use Apps\BlogApi\App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
