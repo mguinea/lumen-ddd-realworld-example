@@ -29,5 +29,11 @@ networks:
 composer-install:
 	@docker exec -it blog-api.app composer install
 
+composer-update:
+	@docker exec -it blog-api.app composer update
+
+jwt-secret:
+	@docker exec -it blog-api.app php artisan jwt:secret
+
 bash:
 	@docker exec -it -w /var/www/apps/blog-api blog-api.app bash

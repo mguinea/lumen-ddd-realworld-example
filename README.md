@@ -21,3 +21,5 @@ For more information on how to this works with other frontends/backends, head ov
 
 > npm install, npm start, etc. TODO
 
+# Resources
+- https://jwt-auth.readthedocs.io/en/develop/lumen-installation/
