@@ -32,7 +32,8 @@
   },
   "autoload": {
     "psr-4": {
-      "App\\": "src/"
+      "App\\": "src/",
+      "Apps\\BlogApi\\": "apps/blog-api/"
     }
   },
   "autoload-dev": {

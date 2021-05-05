@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  blog-api.db:
+    container_name: blog-api.db
+    image: mysql:8.0
+    ports:
+      - 3360:3306
+    volumes:
+      - ./var/lib/mysql-files:/var/lib/mysql-files
+      - ./etc/infrastructure/config/blog-api/mysql/my.cnf:/etc/mysql/my.cnf
+      - lumen-ddd-realworld-example-dbdata:/var/lib/mysql/
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
+    networks:
+      - lumen-ddd-realworld-example-network
+
+  blog-api.app:
+    container_name: blog-api.app
+    build:
+      context: .
+      dockerfile: ./etc/docker/php.Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8880:8880
+      - 9000:9000
+    volumes:
+      - ./:/var/www
+      - ./etc/infrastructure/config/blog-api/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    env_file:
+      - .env
+    depends_on:
+      - blog-api.db
+    command: php -S localhost:8880 -t apps/blog-api/public
+    networks:
+      - lumen-ddd-realworld-example-network
+
+networks:
+  lumen-ddd-realworld-example-network:
+    driver: bridge
+
+volumes:
+  lumen-ddd-realworld-example-dbdata:
+    driver: local
