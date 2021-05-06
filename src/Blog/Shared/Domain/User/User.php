@@ -36,6 +36,24 @@ final class User
         $this->image = $image;
     }
 
+    public static function fromPrimitives(
+        string $id,
+        string $email,
+        ?string $token,
+        string $username,
+        ?string $bio = null,
+        ?string $image = null
+    ): self {
+        return new self(
+            UserId::fromValue($id),
+            UserEmail::fromValue($email),
+            UserToken::fromValue($token),
+            UserName::fromValue($username),
+            UserBio::fromValue($bio),
+            UserImage::fromValue($image)
+        );
+    }
+
     public function id(): UserId
     {
         return $this->id;

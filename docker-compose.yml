@@ -2,33 +2,41 @@ version: '3'
 
 services:
   blog-api.db:
+    image: mysql:5.7.22
     container_name: blog-api.db
-    image: mysql:8.0
+    restart: unless-stopped
+    tty: true
     ports:
       - 3360:3306
-    volumes:
-      - ./var/lib/mysql-files:/var/lib/mysql-files
-      - ./etc/infrastructure/config/blog-api/mysql/my.cnf:/etc/mysql/my.cnf
-      - lumen-ddd-realworld-example-dbdata:/var/lib/mysql/
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
     env_file:
       - .env
+    volumes:
+      - realworld-dbdata:/var/lib/mysql/
+      - ./etc/infrastructure/config/blog-api/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      - lumen-ddd-realworld-example-network
+      - realworld
 
   blog-api.app:
-    container_name: blog-api.app
     build:
       context: .
       dockerfile: ./etc/docker/php.Dockerfile
+    container_name: blog-api.app
     restart: unless-stopped
+    tty: true
     ports:
       - 8880:8880
       - 9000:9000
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
     volumes:
       - ./:/var/www
       - ./etc/infrastructure/config/blog-api/php/local.ini:/usr/local/etc/php/conf.d/local.ini
@@ -38,12 +46,25 @@ services:
       - blog-api.db
     command: php -S blog-api.app:8880 -t apps/blog-api/public
     networks:
-      - lumen-ddd-realworld-example-network
+      - realworld
+
+  realworld.phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: realworld.phpmyadmin
+    ports:
+      - 8881:80
+    environment:
+      - PMA_HOSTS=blog-api.db
+      - PMA_PORTS=3306
+    depends_on:
+      - blog-api.db
+    networks:
+      - realworld
 
 networks:
-  lumen-ddd-realworld-example-network:
+  realworld:
     driver: bridge
 
 volumes:
-  lumen-ddd-realworld-example-dbdata:
+  realworld-dbdata:
     driver: local

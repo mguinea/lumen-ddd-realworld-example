@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-abstract class StringValueObject
+abstract class NullableStringValueObject
 {
-    protected string $value;
+    protected ?string $value;
 
-    public function __construct(string $value)
+    public function __construct(?string $value)
     {
         $this->value = $value;
     }
 
-    public static function fromValue(string $value): static
+    public static function fromValue(?string $value): static
     {
         return new static($value);
     }
 
-    public function value(): string
+    public function value(): ?string
     {
         return $this->value;
     }

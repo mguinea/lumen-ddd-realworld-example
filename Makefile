@@ -2,10 +2,11 @@ PROJECT_NAME := lumen-ddd-realworld-example
 DOCKER_COMPOSE = docker-compose -p $(PROJECT_NAME) -f docker-compose.yml
 
 install:
-	@docker network inspect lumen-ddd-realworld-example-network > /dev/null || docker network create lumen-ddd-realworld-example-network
+	@docker network inspect realworld > /dev/null || docker network create realworld
 	@make build
 	@make up
 	@make composer-install
+	@make migrate
 
 build:
 	$(DOCKER_COMPOSE) build
@@ -31,6 +32,12 @@ composer-install:
 
 composer-update:
 	@docker exec -it blog-api.app composer update
+
+migrate:
+	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan migrate
+
+migrate-fresh:
+	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan migrate:fresh
 
 jwt-secret:
 	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan jwt:secret

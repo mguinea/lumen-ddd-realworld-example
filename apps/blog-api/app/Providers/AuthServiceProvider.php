@@ -2,7 +2,7 @@
 
 namespace Apps\BlogApi\App\Providers;
 
-use Apps\BlogApi\App\Models\User;
+use App\Blog\User\Infrastructure\Persistence\Eloquent\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 

@@ -23,3 +23,4 @@ For more information on how to this works with other frontends/backends, head ov
 
 # Resources
 - https://jwt-auth.readthedocs.io/en/develop/lumen-installation/
+- https://www.positronx.io/laravel-jwt-authentication-tutorial-user-login-signup-api/
