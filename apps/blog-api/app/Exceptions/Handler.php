@@ -45,41 +45,41 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        $errors['errors'] = [
-            $e->field() => $e->getMessage()
-        ];
+        $errors = [];
 
-        if ($e instanceof NotValidValueObjectException) {
-            return new JsonResponse(
-                $errors, Response::HTTP_UNPROCESSABLE_ENTITY
-            );
+        if (true === config('app.debug') && 'production' !== env('APP_ENV')) {
+            $errors['exception'] = get_class($e);
         }
 
-        $response = [
-            'errors' => $e->getMessage()
-        ];
-        /*
-        if (config('app.debug') && 'testing' !== env('APP_ENV')) {
-            $response['exception'] = get_class($e);
-            $response['message'] = $e->getMessage();
-            $response['trace'] = $e->getTrace();
+        if (true === property_exists($e, 'field')) {
+            $errors['errors'] = [
+                $e->field() => $e->getMessage()
+            ];
+        } else {
+            $errors['errors'] = [
+                'message' => $e->getMessage()
+            ];
         }
-        //*/
-        return $this->handleException($e, $response);
+
+        return $this->handleException($e, $errors);
     }
 
-    private function handleException(Throwable $e, array $response = []): JsonResponse
+    private function handleException(Throwable $e, array $errors = []): JsonResponse
     {
         if ($e instanceof NotValidValueObjectException) {
-            return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if ($e instanceof NotValidValueObjectException) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         if ($e instanceof InvalidArgumentException) {
-            return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+            return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
 
         if ($e instanceof NotFoundException) {
-            return new JsonResponse($response, Response::HTTP_NOT_FOUND);
+            return new JsonResponse($errors, Response::HTTP_NOT_FOUND);
         }
 
         if ($e instanceof AuthorizationException) {

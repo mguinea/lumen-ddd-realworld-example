@@ -27,8 +27,8 @@ final class RegisterController extends Controller
             $credentials['username'] ?? '',
             $credentials['email'] ?? '',
             $credentials['password'] ?? '',
-            $credentials['bio'] ?? '',
-            $credentials['image'] ?? '',
+            $credentials['bio'] ?? null,
+            $credentials['image'] ?? null,
         );
 
         return new JsonResponse(

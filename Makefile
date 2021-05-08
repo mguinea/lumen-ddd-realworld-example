@@ -50,4 +50,4 @@ bash:
 
 .PHONY: tests
 tests:
-	@docker exec -it blog-api.app php vendor/bin/phpunit apps/blog-api/tests --order-by=random --configuration=apps/blog-api/phpunit.xml
+	@docker exec -it blog-api.app vendor/bin/phpunit apps/blog-api/tests --order-by=random --configuration=apps/blog-api/phpunit.xml
