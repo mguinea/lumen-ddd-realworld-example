@@ -10,14 +10,14 @@ use Tests\Shared\Domain\Builder;
 
 final class UserImageBuilder implements Builder
 {
-    private string $value;
+    private ?string $value;
 
     public function __construct()
     {
         $this->value = Factory::create()->imageUrl();
     }
 
-    public function withValue(string $value): self
+    public function withValue(?string $value = null): self
     {
         $this->value = $value;
 
