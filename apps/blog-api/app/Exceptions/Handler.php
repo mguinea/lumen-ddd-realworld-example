@@ -55,16 +55,12 @@ class Handler extends ExceptionHandler
             );
         }
 
-        $response = [
-            'errors' => $e->getMessage()
-        ];
-        /*
-        if (config('app.debug') && 'testing' !== env('APP_ENV')) {
+        if (config('app.debug') && 'local' === env('APP_ENV')) {
             $response['exception'] = get_class($e);
             $response['message'] = $e->getMessage();
             $response['trace'] = $e->getTrace();
         }
-        //*/
+
         return $this->handleException($e, $response);
     }
 
