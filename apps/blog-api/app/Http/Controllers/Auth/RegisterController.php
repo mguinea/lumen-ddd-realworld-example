@@ -21,19 +21,14 @@ final class RegisterController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        $credentials = $request->get(
-            'user',
-            [
-                'username' => null,
-                'email' => null,
-                'password' => null
-            ]
-        );
+        $credentials = $request->get('user');
 
         $userResponse = $this->register->__invoke(
-            $credentials['username'],
-            $credentials['email'],
-            $credentials['password']
+            $credentials['username'] ?? '',
+            $credentials['email'] ?? '',
+            $credentials['password'] ?? '',
+            $credentials['bio'] ?? '',
+            $credentials['image'] ?? '',
         );
 
         return new JsonResponse(

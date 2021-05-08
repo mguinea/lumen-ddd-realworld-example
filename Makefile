@@ -33,6 +33,9 @@ composer-install:
 composer-update:
 	@docker exec -it blog-api.app composer update
 
+composer-dump-autoload:
+	@docker exec -it blog-api.app composer dump-autoload
+
 migrate:
 	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan migrate
 
@@ -44,3 +47,7 @@ jwt-secret:
 
 bash:
 	@docker exec -it -w /var/www/apps/blog-api blog-api.app bash
+
+.PHONY: tests
+tests:
+	@docker exec -it blog-api.app php vendor/bin/phpunit apps/blog-api/tests --order-by=random --configuration=apps/blog-api/phpunit.xml

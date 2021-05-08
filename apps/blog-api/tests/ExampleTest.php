@@ -1,5 +1,7 @@
 <?php
 
+namespace Apps\BlogApi\Tests;
+
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 

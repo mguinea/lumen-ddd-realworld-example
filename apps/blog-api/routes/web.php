@@ -21,3 +21,14 @@ $router->group(
         $router->post('/', ['as' => 'register', 'uses' => 'RegisterController']);
     }
 );
+
+$router->group(
+    [
+        'namespace' => 'User',
+        'prefix' => 'api/user',
+        'middleware' => 'auth:api'
+    ],
+    function (Router $router) {
+        $router->get('/', ['as' => 'current_user', 'uses' => 'GetCurrentUserController']);
+    }
+);

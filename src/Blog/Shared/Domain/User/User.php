@@ -9,12 +9,14 @@ use App\Blog\User\Domain\UserEmail;
 use App\Blog\User\Domain\UserId;
 use App\Blog\User\Domain\UserImage;
 use App\Blog\User\Domain\UserName;
+use App\Blog\User\Domain\UserPassword;
 use App\Blog\User\Domain\UserToken;
 
 final class User
 {
     private UserId $id;
     private UserEmail $email;
+    private UserPassword $password;
     private UserToken $token;
     private UserName $username;
     private UserBio $bio;
@@ -23,6 +25,7 @@ final class User
     public function __construct(
         UserId $id,
         UserEmail $email,
+        UserPassword $password,
         UserToken $token,
         UserName $username,
         UserBio $bio,
@@ -30,6 +33,7 @@ final class User
     ) {
         $this->id = $id;
         $this->email = $email;
+        $this->password = $password;
         $this->token = $token;
         $this->username = $username;
         $this->bio = $bio;
@@ -39,6 +43,7 @@ final class User
     public static function fromPrimitives(
         string $id,
         string $email,
+        ?string $password,
         ?string $token,
         string $username,
         ?string $bio = null,
@@ -47,6 +52,7 @@ final class User
         return new self(
             UserId::fromValue($id),
             UserEmail::fromValue($email),
+            UserPassword::fromValue($password),
             UserToken::fromValue($token),
             UserName::fromValue($username),
             UserBio::fromValue($bio),
@@ -62,6 +68,11 @@ final class User
     public function email(): UserEmail
     {
         return $this->email;
+    }
+
+    public function password(): UserPassword
+    {
+        return $this->password;
     }
 
     public function token(): UserToken
