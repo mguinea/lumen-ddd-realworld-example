@@ -32,3 +32,13 @@ $router->group(
         $router->get('/', ['as' => 'current_user', 'uses' => 'GetCurrentUserController']);
     }
 );
+
+$router->group(
+    [
+        'namespace' => 'Article',
+        'prefix' => 'api/articles'
+    ],
+    function (Router $router) {
+        $router->get('{slug}', ['as' => 'get_article_by_slug', 'uses' => 'GetArticleBySlugController']);
+    }
+);

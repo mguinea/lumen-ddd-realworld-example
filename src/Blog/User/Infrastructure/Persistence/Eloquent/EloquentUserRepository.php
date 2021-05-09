@@ -29,7 +29,7 @@ final class EloquentUserRepository implements UserRepository
         $this->authFactory = $authFactory;
     }
 
-    public function findByEmail(UserEmail $email): ?DomainUser
+    public function findByEmail(UserEmail $email): ?DomainUser // TODO review¿?
     {
         $user = $this->model->where('email', $email->value())->first();
 
