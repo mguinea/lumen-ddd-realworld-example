@@ -10,7 +10,7 @@ interface UserRepository
 
     public function getCurrentUser(): ?User;
 
-    public function logIn(UserEmail $email, UserPassword $password): User;
+    public function logIn(UserEmail $email, UserPassword $password): ?User;
 
     public function register(
         UserName $username,

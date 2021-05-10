@@ -1,0 +1,106 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Apps\BlogApi\Tests\Http\Controllers\Auth;
+
+use App\Blog\Shared\Domain\User\User;
+use Apps\BlogApi\Tests\TestCase;
+use Illuminate\Http\Response;
+use Laravel\Lumen\Testing\DatabaseMigrations;
+use Tests\Blog\Shared\Domain\User\UserBuilder;
+use Tests\Blog\User\Domain\UserEmailBuilder;
+use Tests\Blog\User\Domain\UserPasswordBuilder;
+
+final class LoginControllerTest extends TestCase
+{
+    use DatabaseMigrations;
+
+    private string $endpoint = '/api/users/login';
+
+    public function testLogInRegisteredUser(): void
+    {
+        $user = (new UserBuilder())->build();
+        $this->registerUser($user);
+
+        $payload = [
+            'user' => [
+                'email' => $user->email()->value(),
+                'password' => $user->password()->value()
+            ]
+        ];
+
+        $this->post($this->endpoint, $payload);
+
+        $this->response
+            ->assertJson(
+                [
+                    'user' => [
+                        'email' => $user->email()->value(),
+                        'username' => $user->username()->value(),
+                        'bio' => $user->bio()->value(),
+                        'image' => $user->image()->value()
+                    ]
+                ]
+            )
+            ->assertStatus(Response::HTTP_OK);
+    }
+
+    private function registerUser(User $user): void
+    {
+        $payload = [
+            'user' => [
+                'username' => $user->username()->value(),
+                'email' => $user->email()->value(),
+                'password' => $user->password()->value(),
+                'bio' => $user->bio()->value(),
+                'image' => $user->image()->value()
+            ]
+        ];
+
+        $this->post('/api/users', $payload);
+    }
+
+    public function testLogInNonRegisteredUser(): void
+    {
+        $user = (new UserBuilder())->build();
+
+        $payload = [
+            'user' => [
+                'email' => $user->email()->value(),
+                'password' => $user->password()->value()
+            ]
+        ];
+
+        $this->post($this->endpoint, $payload);
+
+        $this->response->assertSee('Not authorized')
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
+    /**
+     * @dataProvider logins
+     */
+    public function testLogInWithoutRequiredFields(?string $email, ?string $password): void
+    {
+        $this->post(
+            $this->endpoint,
+            [
+                'user' => [
+                    'email' => $email,
+                    'password' => $password
+                ]
+            ]
+        );
+
+        $this->response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function logins(): array
+    {
+        return [
+            [(new UserEmailBuilder())->build()->value(), null],
+            [null, (new UserPasswordBuilder())->build()->value()],
+        ];
+    }
+}

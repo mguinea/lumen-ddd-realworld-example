@@ -17,6 +17,12 @@ final class UserLogIn
 
     public function __invoke(UserEmail $email, UserPassword $password): User
     {
-        return $this->repository->logIn($email, $password);
+        $user = $this->repository->logIn($email, $password);
+
+        if (null === $user) {
+            throw new AuthorizationException();
+        }
+
+        return $user;
     }
 }

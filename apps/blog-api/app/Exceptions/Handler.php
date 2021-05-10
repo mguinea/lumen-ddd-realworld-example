@@ -2,10 +2,10 @@
 
 namespace Apps\BlogApi\App\Exceptions;
 
+use App\Blog\User\Domain\AuthorizationException;
 use App\Shared\Domain\NotFoundException;
 use App\Shared\Domain\ValueObject\NotValidValueObjectException;
 use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use InvalidArgumentException;
@@ -66,10 +66,6 @@ class Handler extends ExceptionHandler
 
     private function handleException(Throwable $e, array $errors = []): JsonResponse
     {
-        if ($e instanceof NotValidValueObjectException) {
-            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
         if ($e instanceof NotValidValueObjectException) {
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }

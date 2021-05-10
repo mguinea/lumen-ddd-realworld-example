@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Apps\BlogApi\Tests\Http\Controllers\Auth;
 
 use Apps\BlogApi\Tests\TestCase;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Laravel\Lumen\Testing\DatabaseTransactions;
 use Illuminate\Http\Response;
+use Laravel\Lumen\Testing\DatabaseMigrations;
 use Tests\Blog\Shared\Domain\User\UserBuilder;
 use Tests\Blog\User\Domain\UserBioBuilder;
 use Tests\Blog\User\Domain\UserImageBuilder;
@@ -15,13 +14,11 @@ use Tests\Blog\User\Domain\UserImageBuilder;
 final class RegisterControllerTest extends TestCase
 {
     use DatabaseMigrations;
-    use DatabaseTransactions;
 
     private string $endpoint = '/api/users';
 
     public function testRegisterUser()
     {
-        $this->markTestSkipped('Failing in github actions');
         $user = (new UserBuilder())->build();
 
         $payload = [
@@ -50,7 +47,6 @@ final class RegisterControllerTest extends TestCase
 
     public function testRegisterUserWithoutOptionalFields()
     {
-        $this->markTestSkipped('Failing in github actions');
         $user = (new UserBuilder())
             ->withBio((new UserBioBuilder())->withValue()->build())
             ->withImage((new UserImageBuilder())->withValue()->build())

@@ -15,6 +15,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
+use Illuminate\Support\Facades\Hash;
 
 final class EloquentUserRepository implements UserRepository
 {
@@ -37,32 +38,50 @@ final class EloquentUserRepository implements UserRepository
             return null;
         }
 
-        return $user;
-    }
-
-    public function getCurrentUser(): ?DomainUser
-    {
-        $user = $this->authFactory->guard()->user();
-
         return DomainUser::fromPrimitives(
             $user->id,
             $user->email,
-            '',
+            $user->password,
             $user->username,
             $user->bio,
             $user->image
         );
     }
 
-    public function logIn(UserEmail $email, UserPassword $password): DomainUser
+    public function getCurrentUser(): ?DomainUser
     {
-        $token = $this->generateToken($email->value(), $password->value());
+        $user = $this->authFactory->guard()->user();
 
-        $user = $this->model->where('email', $email->value())->first();
+        if (null === $user) {
+            return null;
+        }
 
         return DomainUser::fromPrimitives(
             $user->id,
             $user->email,
+            $user->password,
+            $user->username,
+            $user->bio,
+            $user->image
+        );
+    }
+
+    public function logIn(UserEmail $email, UserPassword $password): ?DomainUser
+    {
+        $user = $this->model
+            ->where('email', $email->value())
+            ->first();
+
+        if (null === $user || false === Hash::check($password->value(), $user->password)) {
+            return null;
+        }
+
+        $token = $this->generateToken($email->value(), $password->value());
+
+        return DomainUser::fromPrimitives(
+            $user->id,
+            $user->email,
+            $user->password,
             $token,
             $user->username,
             $user->bio,

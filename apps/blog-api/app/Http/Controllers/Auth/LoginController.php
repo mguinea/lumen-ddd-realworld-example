@@ -21,17 +21,11 @@ final class LoginController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        $credentials = $request->get(
-            'user',
-            [
-                'email' => null,
-                'password' => null
-            ]
-        );
+        $credentials = $request->get('user');
 
         $userResponse = $this->logIn->__invoke(
-            $credentials['email'],
-            $credentials['password']
+            $credentials['email'] ?? '',
+            $credentials['password'] ?? ''
         );
 
         return new JsonResponse(

@@ -43,7 +43,7 @@ final class User
     public static function fromPrimitives(
         string $id,
         string $email,
-        ?string $password,
+        string $password,
         ?string $token,
         string $username,
         ?string $bio = null,
