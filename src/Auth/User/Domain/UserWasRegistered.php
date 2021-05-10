@@ -6,5 +6,5 @@ namespace App\Auth\User\Domain;
 
 class UserWasRegistered
 {
-
+    // TODO
 }

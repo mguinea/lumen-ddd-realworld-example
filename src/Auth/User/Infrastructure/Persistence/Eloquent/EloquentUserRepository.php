@@ -11,6 +11,7 @@ use App\Auth\User\Domain\UserRepository;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Factory as AuthFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Hashing\BcryptHasher;
 use Illuminate\Support\Facades\Hash;
 
@@ -125,5 +126,30 @@ final class EloquentUserRepository implements UserRepository
         }
 
         return $token;
+    }
+
+    public function save(DomainUser $domainUser): DomainUser
+    {
+        $hashedPassword = (new BcryptHasher)->make($domainUser->password()->value());
+
+        $user = $this->model->find($domainUser->id()->value());
+        $user->username = $domainUser->username()->value();
+        $user->email = $domainUser->email()->value();
+        $user->password = $hashedPassword;
+        $user->bio = $domainUser->bio()->value();
+        $user->image = $domainUser->image()->value();
+        $user->save();
+
+        $token = $this->generateToken($domainUser->email()->value(), $domainUser->password()->value());
+
+        return DomainUser::fromPrimitives(
+            $user->id,
+            $user->email,
+            $user->password,
+            $token,
+            $user->username,
+            $user->bio,
+            $user->image
+        );
     }
 }

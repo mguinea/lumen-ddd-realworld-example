@@ -72,6 +72,20 @@ final class User extends AggregateRoot
         );
     }
 
+    public function update(
+        ?UserEmail $email,
+        ?UserPassword $password,
+        ?UserName $username,
+        ?UserBio $bio,
+        ?UserImage $image
+    ): void {
+        $this->email = null !== $email ? $email : $this->email;
+        $this->password = null !== $password ? $password : $this->password;
+        $this->username = null !== $username ? $username : $this->username;
+        $this->bio = null !== $bio ? $bio : $this->bio;
+        $this->image = null !== $image ? $image : $this->image;
+    }
+
     public function id(): UserId
     {
         return $this->id;

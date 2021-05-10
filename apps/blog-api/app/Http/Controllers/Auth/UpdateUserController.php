@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Auth\User\Application\Updater;
+use App\Auth\User\Application\UpdateUser;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Illuminate\Http\Response;
 
 final class UpdateUserController extends Controller
 {
-    private Updater $updater;
+    private UpdateUser $updater;
 
-    public function __construct(Updater $updater)
+    public function __construct(UpdateUser $updater)
     {
         $this->updater = $updater;
     }
@@ -24,11 +24,11 @@ final class UpdateUserController extends Controller
         $credentials = $request->get('user');
 
         $userResponse = $this->updater->__invoke(
-            $credentials['username'] ?? '',
-            $credentials['email'] ?? '',
-            $credentials['password'] ?? '',
-            $credentials['image'] ?? '',
-            $credentials['bio'] ?? '',
+            $credentials['username'] ?? null,
+            $credentials['email'] ?? null,
+            $credentials['password'] ?? null,
+            $credentials['bio'] ?? null,
+            $credentials['image'] ?? null
         );
 
         return new JsonResponse(

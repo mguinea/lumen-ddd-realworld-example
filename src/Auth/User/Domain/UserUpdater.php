@@ -6,8 +6,35 @@ namespace App\Auth\User\Domain;
 
 final class UserUpdater
 {
-    public function __invoke()
+    private UserRepository $repository;
+
+    public function __construct(UserRepository $repository)
     {
-        // TODO: Implement __invoke() method.
+        $this->repository = $repository;
+    }
+
+    public function __invoke(
+        ?UserName $username,
+        ?UserEmail $email,
+        ?UserPassword $password,
+        ?UserBio $bio,
+        ?UserImage $image
+    ): User {
+        $user = $this->repository->getCurrentUser();
+
+        if (null === $user) {
+            throw new \Exception('Not found');
+            // throw new UserNotFound(); // TODO 404
+        }
+
+        $user->update(
+            $email,
+            $password,
+            $username,
+            $bio,
+            $image
+        );
+
+        return $this->repository->save($user);
     }
 }
