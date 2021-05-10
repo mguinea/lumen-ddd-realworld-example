@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Blog\User\Application\Register;
+use App\Auth\User\Application\Register;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -26,9 +26,7 @@ final class RegisterController extends Controller
         $userResponse = $this->register->__invoke(
             $credentials['username'] ?? '',
             $credentials['email'] ?? '',
-            $credentials['password'] ?? '',
-            $credentials['bio'] ?? null,
-            $credentials['image'] ?? null,
+            $credentials['password'] ?? ''
         );
 
         return new JsonResponse(

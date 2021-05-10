@@ -1,6 +1,6 @@
 <?php
 
-use App\Blog\User\Infrastructure\Persistence\Eloquent\User;
+use App\Auth\User\Infrastructure\Persistence\Eloquent\User;
 
 return [
 

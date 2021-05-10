@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Blog\User\Application\LogIn;
+use App\Auth\User\Application\LogIn;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

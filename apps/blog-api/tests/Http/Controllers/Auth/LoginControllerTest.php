@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\Tests\Http\Controllers\Auth;
 
-use App\Blog\Shared\Domain\User\User;
+use App\Auth\User\Domain\User;
 use Apps\BlogApi\Tests\TestCase;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Testing\DatabaseMigrations;
-use Tests\Blog\Shared\Domain\User\UserBuilder;
-use Tests\Blog\User\Domain\UserEmailBuilder;
-use Tests\Blog\User\Domain\UserPasswordBuilder;
+use Tests\Auth\User\Domain\UserBuilder;
+use Tests\Auth\User\Domain\UserEmailBuilder;
+use Tests\Auth\User\Domain\UserPasswordBuilder;
 
 final class LoginControllerTest extends TestCase
 {
@@ -38,8 +38,8 @@ final class LoginControllerTest extends TestCase
                     'user' => [
                         'email' => $user->email()->value(),
                         'username' => $user->username()->value(),
-                        'bio' => $user->bio()->value(),
-                        'image' => $user->image()->value()
+                        'bio' => null,
+                        'image' => null
                     ]
                 ]
             )

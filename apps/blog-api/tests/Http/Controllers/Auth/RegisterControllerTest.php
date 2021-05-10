@@ -7,9 +7,9 @@ namespace Apps\BlogApi\Tests\Http\Controllers\Auth;
 use Apps\BlogApi\Tests\TestCase;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Testing\DatabaseMigrations;
-use Tests\Blog\Shared\Domain\User\UserBuilder;
-use Tests\Blog\User\Domain\UserBioBuilder;
-use Tests\Blog\User\Domain\UserImageBuilder;
+use Tests\Auth\User\Domain\UserBioBuilder;
+use Tests\Auth\User\Domain\UserBuilder;
+use Tests\Auth\User\Domain\UserImageBuilder;
 
 final class RegisterControllerTest extends TestCase
 {
@@ -25,24 +25,23 @@ final class RegisterControllerTest extends TestCase
             'user' => [
                 'username' => $user->username()->value(),
                 'email' => $user->email()->value(),
-                'password' => $user->password()->value(),
-                'bio' => $user->bio()->value(),
-                'image' => $user->image()->value()
+                'password' => $user->password()->value()
             ]
         ];
 
         $this->post($this->endpoint, $payload);
 
-        $this->response->assertJson(
-            [
-                'user' => [
-                    'email' => $user->email()->value(),
-                    'username' => $user->username()->value(),
-                    'bio' => $user->bio()->value(),
-                    'image' => $user->image()->value()
+        $this->response
+            ->assertJson(
+                [
+                    'user' => [
+                        'email' => $user->email()->value(),
+                        'username' => $user->username()->value(),
+                        'bio' => null,
+                        'image' => null
+                    ]
                 ]
-            ]
-        )->assertStatus(Response::HTTP_OK);
+            )->assertStatus(Response::HTTP_OK);
     }
 
     public function testRegisterUserWithoutOptionalFields()
@@ -64,16 +63,17 @@ final class RegisterControllerTest extends TestCase
 
         $this->post($this->endpoint, $payload);
 
-        $this->response->assertJson(
-            [
-                'user' => [
-                    'email' => $user->email()->value(),
-                    'username' => $user->username()->value(),
-                    'bio' => $user->bio()->value(),
-                    'image' => $user->image()->value()
+        $this->response
+            ->assertJson(
+                [
+                    'user' => [
+                        'email' => $user->email()->value(),
+                        'username' => $user->username()->value(),
+                        'bio' => $user->bio()->value(),
+                        'image' => $user->image()->value()
+                    ]
                 ]
-            ]
-        )->assertStatus(Response::HTTP_OK);
+            )->assertStatus(Response::HTTP_OK);
     }
 
     public function testCannotRegisterUserWithoutEmail()
@@ -91,12 +91,13 @@ final class RegisterControllerTest extends TestCase
 
         $this->post($this->endpoint, $payload);
 
-        $this->response->assertJson(
-            [
-                'errors' => [
-                    'email' => "can't be empty"
+        $this->response
+            ->assertJson(
+                [
+                    'errors' => [
+                        'email' => "can't be empty"
+                    ]
                 ]
-            ]
-        )->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            )->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
