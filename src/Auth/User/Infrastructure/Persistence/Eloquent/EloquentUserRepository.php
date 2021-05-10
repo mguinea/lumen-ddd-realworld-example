@@ -90,8 +90,7 @@ final class EloquentUserRepository implements UserRepository
 
     public function register(DomainUser $domainUser): DomainUser
     {
-        //$hashedPassword = Hash::make($domainUser->password()->value());
-        $hashedPassword = (new BcryptHasher)->make($domainUser->password()->value()); // TODO move to domain
+        $hashedPassword = (new BcryptHasher)->make($domainUser->password()->value());
 
         $user = new User;
         $user->username = $domainUser->username()->value();

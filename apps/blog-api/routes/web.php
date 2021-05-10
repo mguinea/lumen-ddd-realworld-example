@@ -10,7 +10,8 @@ $router->group(
         'prefix' => 'api/users'
     ],
     function (Router $router) {
-        $router->post('login', ['as' => 'login', 'uses' => 'LoginController']);
-        $router->post('/', ['as' => 'register', 'uses' => 'RegisterController']);
+        $router->post('login', ['as' => 'login', 'uses' => 'UserLoginController']);
+        $router->post('/', ['as' => 'register', 'uses' => 'RegisterUserController']);
+        $router->put('/', ['as' => 'update', 'uses' => 'UpdateUserController']);
     }
 );

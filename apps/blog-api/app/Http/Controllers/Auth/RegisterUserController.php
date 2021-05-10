@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-final class RegisterController extends Controller
+final class RegisterUserController extends Controller
 {
     private Register $register;
 

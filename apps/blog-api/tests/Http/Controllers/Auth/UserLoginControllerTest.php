@@ -12,7 +12,7 @@ use Tests\Auth\User\Domain\UserBuilder;
 use Tests\Auth\User\Domain\UserEmailBuilder;
 use Tests\Auth\User\Domain\UserPasswordBuilder;
 
-final class LoginControllerTest extends TestCase
+final class UserLoginControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
