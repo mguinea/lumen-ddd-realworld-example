@@ -4,29 +4,24 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Auth\User\Application\LogIn;
+use App\Auth\User\Application\GetCurrentUser;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-final class LoginController extends Controller
+final class GetCurrentUserController extends Controller
 {
-    private LogIn $logIn;
+    private GetCurrentUser $getCurrentUser;
 
-    public function __construct(LogIn $logIn)
+    public function __construct(GetCurrentUser $getCurrentUser)
     {
-        $this->logIn = $logIn;
+        $this->getCurrentUser = $getCurrentUser;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        $credentials = $request->get('user');
-
-        $userResponse = $this->logIn->__invoke(
-            $credentials['email'] ?? '',
-            $credentials['password'] ?? ''
-        );
+        $userResponse = $this->getCurrentUser->__invoke();
 
         return new JsonResponse(
             [

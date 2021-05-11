@@ -61,7 +61,7 @@ final class User extends AggregateRoot
     ): self {
         $id = UserId::create();
 
-        return self::fromPrimitives(
+        $user = self::fromPrimitives(
             $id->value(),
             $email->value(),
             $password->value(),
@@ -70,6 +70,26 @@ final class User extends AggregateRoot
             null,
             null
         );
+
+        $user->record(UserWasRegistered::fromUser($user));
+
+        return $user;
+    }
+
+    public function update(
+        ?UserEmail $email,
+        ?UserPassword $password,
+        ?UserName $username,
+        ?UserBio $bio,
+        ?UserImage $image
+    ): void {
+        $this->email = null !== $email ? $email : $this->email;
+        $this->password = null !== $password ? $password : $this->password;
+        $this->username = null !== $username ? $username : $this->username;
+        $this->bio = null !== $bio ? $bio : $this->bio;
+        $this->image = null !== $image ? $image : $this->image;
+
+        $this->record(UserWasUpdated::fromUser($this));
     }
 
     public function id(): UserId

@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Domain;
 
+use App\Shared\Domain\Bus\Event\EventBus;
+
 final class UserRegistrator
 {
     private UserRepository $repository;
+    private EventBus $eventBus;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $repository, EventBus $eventBus)
     {
         $this->repository = $repository;
+        $this->eventBus = $eventBus;
     }
 
     public function __invoke(
@@ -30,6 +34,9 @@ final class UserRegistrator
             $password
         );
 
-        return $this->repository->register($domainUser);
+        $user = $this->repository->register($domainUser);
+        $this->eventBus->publish(...$user->pullDomainEvents());
+
+        return $user;
     }
 }

@@ -11,7 +11,7 @@ use Tests\Auth\User\Domain\UserBioBuilder;
 use Tests\Auth\User\Domain\UserBuilder;
 use Tests\Auth\User\Domain\UserImageBuilder;
 
-final class RegisterControllerTest extends TestCase
+final class RegisterUserControllerTest extends TestCase
 {
     use DatabaseMigrations;
 

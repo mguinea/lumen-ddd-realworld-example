@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Domain;
 
-final class UserWasRegistered extends UserDomainEvent
+final class UserWasUpdated extends UserDomainEvent
 {
     public function getEventName(): string
     {

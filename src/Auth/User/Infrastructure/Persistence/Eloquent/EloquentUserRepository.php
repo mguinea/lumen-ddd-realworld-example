@@ -90,8 +90,7 @@ final class EloquentUserRepository implements UserRepository
 
     public function register(DomainUser $domainUser): DomainUser
     {
-        //$hashedPassword = Hash::make($domainUser->password()->value());
-        $hashedPassword = (new BcryptHasher)->make($domainUser->password()->value()); // TODO move to domain
+        $hashedPassword = (new BcryptHasher)->make($domainUser->password()->value());
 
         $user = new User;
         $user->username = $domainUser->username()->value();
@@ -126,5 +125,30 @@ final class EloquentUserRepository implements UserRepository
         }
 
         return $token;
+    }
+
+    public function save(DomainUser $domainUser): DomainUser
+    {
+        $hashedPassword = (new BcryptHasher)->make($domainUser->password()->value());
+
+        $user = $this->model->find($domainUser->id()->value());
+        $user->username = $domainUser->username()->value();
+        $user->email = $domainUser->email()->value();
+        $user->password = $hashedPassword;
+        $user->bio = $domainUser->bio()->value();
+        $user->image = $domainUser->image()->value();
+        $user->save();
+
+        $token = $this->generateToken($domainUser->email()->value(), $domainUser->password()->value());
+
+        return DomainUser::fromPrimitives(
+            $user->id,
+            $user->email,
+            $user->password,
+            $token,
+            $user->username,
+            $user->bio,
+            $user->image
+        );
     }
 }

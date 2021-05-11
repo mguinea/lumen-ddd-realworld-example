@@ -7,13 +7,13 @@ namespace App\Auth\User\Application;
 use App\Auth\User\Domain\UserEmail;
 use App\Auth\User\Domain\UserName;
 use App\Auth\User\Domain\UserPassword;
-use App\Auth\User\Domain\UserRegistrator;
+use App\Auth\User\Domain\UserRegistrator as DomainUserRegistrator;
 
-final class Register
+final class UserRegistrator
 {
-    private UserRegistrator $registrator;
+    private DomainUserRegistrator $registrator;
 
-    public function __construct(UserRegistrator $registrator)
+    public function __construct(DomainUserRegistrator $registrator)
     {
         $this->registrator = $registrator;
     }

@@ -20,7 +20,7 @@ final class GetCurrentUser
         $user = $this->repository->getCurrentUser();
 
         if (null === $user) {
-            // TODO not loged in
+            throw new \Exception('User not found'); // TODO custom exception
         }
 
         return UserResponse::fromUser($user);
