@@ -10,9 +10,9 @@ $router->group(
         'prefix' => 'api/users'
     ],
     function (Router $router) {
-        $router->post('login', ['as' => 'login', 'uses' => 'UserLoginController']);
-        $router->post('/', ['as' => 'register', 'uses' => 'RegisterUserController']);
-        $router->put('/', ['as' => 'update', 'uses' => 'UpdateUserController']);
+        $router->post('login', ['as' => 'log_in', 'uses' => 'UserLogInController']);
+        $router->post('/', ['as' => 'register_user', 'uses' => 'RegisterUserController']);
+        $router->put('/', ['as' => 'update_user', 'uses' => 'UpdateUserController']);
     }
 );
 
@@ -22,6 +22,6 @@ $router->group(
         'prefix' => 'api/user'
     ],
     function (Router $router) {
-        $router->get('/', ['as' => 'get_current', 'uses' => 'GetCurrentUserController']);
+        $router->get('/', ['as' => 'get_current_user', 'uses' => 'GetCurrentUserController']);
     }
 );
