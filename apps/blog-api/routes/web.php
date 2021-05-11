@@ -15,3 +15,13 @@ $router->group(
         $router->put('/', ['as' => 'update', 'uses' => 'UpdateUserController']);
     }
 );
+
+$router->group(
+    [
+        'namespace' => 'Auth',
+        'prefix' => 'api/user'
+    ],
+    function (Router $router) {
+        $router->get('/', ['as' => 'get_current', 'uses' => 'GetCurrentUserController']);
+    }
+);

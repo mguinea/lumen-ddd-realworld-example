@@ -12,12 +12,27 @@ Content-Type: application/json
 
 ###
 # Authentication
-POST localhost: 8880/api/users/login
+POST localhost:8880/api/users/login
 Content-Type: application/json
 
 {
     "user": {
         "email": "jake@jake.jake",
         "password": "jakejake"
+    }
+}
+
+###
+# Update
+PUT localhost:8880/api/users
+Content-Type: application/json
+
+{
+    "user":{
+        "username": "Marc",
+        "email": "jake@jake.jake",
+        "password": "jakejake",
+        "bio": "lorem",
+        "image": "ipsum"
     }
 }
