@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Auth\User\Application\UpdateUser;
+use App\Auth\User\Application\UserUpdater;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Illuminate\Http\Response;
 
 final class UpdateUserController extends Controller
 {
-    private UpdateUser $updater;
+    private UserUpdater $updater;
 
-    public function __construct(UpdateUser $updater)
+    public function __construct(UserUpdater $updater)
     {
         $this->updater = $updater;
     }

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Auth\User\Application;
 
 use App\Auth\User\Domain\UserEmail;
-use App\Auth\User\Domain\UserLogIn;
+use App\Auth\User\Domain\UserLogIn as DomainUserLogIn;
 use App\Auth\User\Domain\UserPassword;
 
-final class LogIn
+final class UserLogIn
 {
-    private UserLogIn $userLogIn;
+    private DomainUserLogIn $userLogIn;
 
-    public function __construct(UserLogIn $userLogIn)
+    public function __construct(DomainUserLogIn $userLogIn)
     {
         $this->userLogIn = $userLogIn;
     }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Auth\User\Application\LogIn;
+use App\Auth\User\Application\UserLogIn;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Illuminate\Http\Response;
 
 final class UserLoginController extends Controller
 {
-    private LogIn $logIn;
+    private UserLogIn $logIn;
 
-    public function __construct(LogIn $logIn)
+    public function __construct(UserLogIn $logIn)
     {
         $this->logIn = $logIn;
     }

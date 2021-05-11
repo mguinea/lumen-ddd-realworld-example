@@ -9,13 +9,13 @@ use App\Auth\User\Domain\UserEmail;
 use App\Auth\User\Domain\UserImage;
 use App\Auth\User\Domain\UserName;
 use App\Auth\User\Domain\UserPassword;
-use App\Auth\User\Domain\UserUpdater;
+use App\Auth\User\Domain\UserUpdater as DomainUserUpdater;
 
-final class UpdateUser
+final class UserUpdater
 {
-    private UserUpdater $updater;
+    private DomainUserUpdater $updater;
 
-    public function __construct(UserUpdater $updater)
+    public function __construct(DomainUserUpdater $updater)
     {
         $this->updater = $updater;
     }

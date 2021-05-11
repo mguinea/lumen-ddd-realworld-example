@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\Auth;
 
-use App\Auth\User\Application\Register;
+use App\Auth\User\Application\UserRegistrator;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Illuminate\Http\Response;
 
 final class RegisterUserController extends Controller
 {
-    private Register $register;
+    private UserRegistrator $register;
 
-    public function __construct(Register $register)
+    public function __construct(UserRegistrator $register)
     {
         $this->register = $register;
     }
