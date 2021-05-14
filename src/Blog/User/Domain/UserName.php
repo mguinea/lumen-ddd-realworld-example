@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\User\Domain;
+namespace App\Blog\User\Domain;
 
 use App\Shared\Domain\ValueObject\StringValueObject;
 

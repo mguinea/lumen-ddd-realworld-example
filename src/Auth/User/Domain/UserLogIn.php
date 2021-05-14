@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Domain;
 
+use App\Shared\Domain\User\UserPassword;
+
 final class UserLogIn
 {
-    private UserRepository $repository;
+    private UserAuthenticator $authenticator;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserAuthenticator $authenticator)
     {
-        $this->repository = $repository;
+        $this->authenticator = $authenticator;
     }
 
     public function __invoke(UserEmail $email, UserPassword $password): User
     {
-        $user = $this->repository->logIn($email, $password);
+        $user = $this->authenticator->logIn($email, $password);
 
         if (null === $user) {
             throw new AuthorizationException();

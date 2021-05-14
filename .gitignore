@@ -1,5 +1,6 @@
 /.idea
 /var/
 /vendor/
+/etc/localstack/.keys
 .env
 .phpunit.result.cache

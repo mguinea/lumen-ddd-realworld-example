@@ -6,16 +6,15 @@ install:
 	@make build
 	@make up
 	@make composer-install
-	@make migrate
 
 build:
 	$(DOCKER_COMPOSE) build
 
 upa:
-	$(DOCKER_COMPOSE) up --force-recreate
+	$(DOCKER_COMPOSE) up --force-recreate --remove-orphans
 
 up:
-	$(DOCKER_COMPOSE) up -d --force-recreate
+	$(DOCKER_COMPOSE) up -d --force-recreate --remove-orphans
 
 destroy:
 	$(DOCKER_COMPOSE) down

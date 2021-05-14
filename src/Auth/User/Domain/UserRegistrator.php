@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Auth\User\Domain;
 
 use App\Shared\Domain\Bus\Event\EventBus;
+use App\Shared\Domain\User\UserEmail;
+use App\Shared\Domain\User\UserPassword;
 
 final class UserRegistrator
 {
@@ -18,7 +20,6 @@ final class UserRegistrator
     }
 
     public function __invoke(
-        UserName $username,
         UserEmail $email,
         UserPassword $password
     ): User {
@@ -28,13 +29,12 @@ final class UserRegistrator
             throw new UserAlreadyRegistered();
         }
 
-        $domainUser = User::register(
-            $username,
+        $user = User::register(
             $email,
             $password
         );
 
-        $user = $this->repository->register($domainUser);
+        $this->repository->save($user);
         $this->eventBus->publish(...$user->pullDomainEvents());
 
         return $user;

@@ -6,7 +6,7 @@ namespace App\Auth\User\Application;
 
 use App\Auth\User\Domain\UserEmail;
 use App\Auth\User\Domain\UserLogIn as DomainUserLogIn;
-use App\Auth\User\Domain\UserPassword;
+use App\Shared\Domain\User\UserPassword;
 
 final class UserLogIn
 {

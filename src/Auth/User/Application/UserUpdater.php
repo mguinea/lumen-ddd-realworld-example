@@ -8,7 +8,7 @@ use App\Auth\User\Domain\UserBio;
 use App\Auth\User\Domain\UserEmail;
 use App\Auth\User\Domain\UserImage;
 use App\Auth\User\Domain\UserName;
-use App\Auth\User\Domain\UserPassword;
+use App\Shared\Domain\User\UserPassword;
 use App\Auth\User\Domain\UserUpdater as DomainUserUpdater;
 
 final class UserUpdater

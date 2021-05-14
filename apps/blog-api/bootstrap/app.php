@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
-    dirname(__DIR__ . '/../../../')
+    dirname(__DIR__ . '/../../../.env')
 ))->bootstrap();
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->withFacades();
+// $app->withFacades();
 $app->withEloquent();
 
 /*
@@ -60,6 +60,9 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('auth');
+$app->configure('database');
+// $app->configure('queue');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -88,8 +91,10 @@ $app->routeMiddleware(
 |
 */
 
+$app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Auth\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(App\Blog\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
+$app->register(App\Blog\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AppServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AuthServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);

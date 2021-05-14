@@ -4,8 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateApiUsersTable extends Migration
 {
+    protected $connection = 'mysql_auth';
+
     /**
      * Run the migrations.
      *
@@ -13,15 +15,10 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::connection('mysql_auth')->create('users', function (Blueprint $table) {
             $table->uuid('id')->primary()->unique();
-            $table->string('username');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('bio')->nullable();
-            $table->string('image')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::connection('mysql_auth')->dropIfExists('users');
     }
 }

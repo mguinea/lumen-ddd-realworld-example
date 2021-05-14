@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Auth\User\Domain;
 
-use App\Auth\User\Domain\UserPassword;
+use App\Shared\Domain\User\UserPassword;
 use Faker\Factory;
 use Tests\Shared\Domain\Builder;
 
@@ -24,8 +24,8 @@ final class UserPasswordBuilder implements Builder
         return $this;
     }
 
-    public function build(): UserPassword
+    public function build(): \App\Shared\Domain\User\UserPassword
     {
-        return new UserPassword($this->value);
+        return new \App\Shared\Domain\User\UserPassword($this->value);
     }
 }

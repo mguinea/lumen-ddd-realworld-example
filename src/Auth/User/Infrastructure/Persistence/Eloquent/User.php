@@ -2,7 +2,7 @@
 
 namespace App\Auth\User\Infrastructure\Persistence\Eloquent;
 
-use App\Auth\User\Domain\UserId;
+use App\Shared\Domain\User\UserId;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -15,6 +15,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 {
     use Authenticatable, Authorizable, HasFactory;
 
+    protected $connection = 'mysql_auth';
     protected $keyType = 'string';
     protected $primaryKey = 'id';
     protected $table = 'users';

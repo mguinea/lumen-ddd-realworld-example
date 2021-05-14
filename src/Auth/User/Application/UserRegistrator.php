@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Application;
 
-use App\Auth\User\Domain\UserEmail;
-use App\Auth\User\Domain\UserName;
-use App\Auth\User\Domain\UserPassword;
+use App\Blog\User\Domain\UserName;
+use App\Shared\Domain\User\UserEmail;
+use App\Shared\Domain\User\UserPassword;
 use App\Auth\User\Domain\UserRegistrator as DomainUserRegistrator;
 
 final class UserRegistrator
@@ -18,13 +18,12 @@ final class UserRegistrator
         $this->registrator = $registrator;
     }
 
-    public function __invoke(string $username, string $email, string $password): UserResponse
+    public function __invoke(string $email, string $password): UserResponse
     {
-        $username = UserName::fromValue($username);
         $email = UserEmail::fromValue($email);
         $password = UserPassword::fromValue($password);
 
-        $user = $this->registrator->__invoke($username, $email, $password);
+        $user = $this->registrator->__invoke($email, $password);
 
         return UserResponse::fromUser($user);
     }

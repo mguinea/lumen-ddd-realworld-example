@@ -1,25 +1,69 @@
 version: '3'
 
 services:
-  blog-api.db:
+  realworld.auth.db:
     image: mysql:5.7.22
-    container_name: blog-api.db
+    container_name: realworld.auth.db
     restart: unless-stopped
     tty: true
     ports:
       - 3360:3306
     environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_AUTH_DATABASE}
+      MYSQL_USER: ${DB_AUTH_USERNAME}
+      MYSQL_PASSWORD: ${DB_AUTH_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_AUTH_PASSWORD}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     env_file:
       - .env
     volumes:
-      - realworld-dbdata:/var/lib/mysql/
-      - ./etc/infrastructure/config/blog-api/mysql/my.cnf:/etc/mysql/my.cnf
+      - realworld-dbdata-auth:/var/lib/mysql/
+      - ./etc/infrastructure/config/shared/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - realworld
+
+  realworld.blog.db:
+    image: mysql:5.7.22
+    container_name: realworld.blog.db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3361:3306
+    environment:
+      MYSQL_DATABASE: ${DB_BLOG_DATABASE}
+      MYSQL_USER: ${DB_BLOG_USERNAME}
+      MYSQL_PASSWORD: ${DB_BLOG_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_BLOG_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    env_file:
+      - .env
+    volumes:
+      - realworld-dbdata-blog:/var/lib/mysql/
+      - ./etc/infrastructure/config/shared/mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - realworld
+
+  realworld.default.db:
+    image: mysql:5.7.22
+    container_name: realworld.default.db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3362:3306
+    environment:
+      MYSQL_DATABASE: ${DB_DEFAULT_DATABASE}
+      MYSQL_USER: ${DB_DEFAULT_USERNAME}
+      MYSQL_PASSWORD: ${DB_DEFAULT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_DEFAULT_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    env_file:
+      - .env
+    volumes:
+      - realworld-dbdata-default:/var/lib/mysql/
+      - ./etc/infrastructure/config/shared/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - realworld
 
@@ -43,7 +87,9 @@ services:
     env_file:
       - .env
     depends_on:
-      - blog-api.db
+      - realworld.auth.db
+      - realworld.blog.db
+      - realworld.default.db
     command: php -S blog-api.app:8880 -t apps/blog-api/public
     networks:
       - realworld
@@ -54,17 +100,46 @@ services:
     ports:
       - 8881:80
     environment:
-      - PMA_HOSTS=blog-api.db
-      - PMA_PORTS=3306
+      - PMA_HOSTS=realworld.auth.db,realworld.blog.db,realworld.default.db
+      - PMA_PORTS=3306,3306,3306
     depends_on:
-      - blog-api.db
+      - realworld.auth.db
+      - realworld.blog.db
+      - realworld.default.db
     networks:
       - realworld
+
+  # realworld.localstack:
+  #   container_name: realworld.localstack
+  #   image: localstack/localstack-full:latest
+  #   environment:
+  #     - SERVICES=s3,sqs,sns
+  #     - DEBUG=1
+  #     - DEFAULT_REGION=eu-west-1
+  #     - AWS_ACCESS_KEY_ID=test
+  #     - AWS_SECRET_ACCESS_KEY=test
+  #     - LOCALSTACK_LOCAL_BUCKET=realworld-local
+  #     - LOCALSTACK_HOSTNAME=realworld-localstack
+  #     - DATA_DIR=/tmp/localstack-bucket
+  #     - LAMBDA_EXECUTOR=docker
+  #     - START_WEB=1
+  #     - PORT_WEB_UI=8099
+  #   ports:
+  #     - 44566:4566 # S3
+  #     - 8099:8080
+  #   volumes:
+  #     - './etc/localstack/init:/docker-entrypoint-initaws.d' # initialize scripts
+  #     - './etc/localstack/.keys:/tmp/localstack' # private & public keys for auth
+  #     - './etc/localstack/bucket:/tmp/localstack-bucket' # data to load in bucket, pushed by init script
 
 networks:
   realworld:
     driver: bridge
 
 volumes:
-  realworld-dbdata:
+  realworld-dbdata-auth:
+    driver: local
+  realworld-dbdata-blog:
+    driver: local
+  realworld-dbdata-default:
     driver: local

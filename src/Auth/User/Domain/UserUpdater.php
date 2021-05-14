@@ -4,23 +4,24 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Domain;
 
+use App\Shared\Domain\User\UserPassword;
+
 final class UserUpdater
 {
+    private UserAuthenticator $authenticator;
     private UserRepository $repository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(UserAuthenticator $authenticator, UserRepository $repository)
     {
+        $this->authenticator = $authenticator;
         $this->repository = $repository;
     }
 
     public function __invoke(
-        ?UserName $username,
         ?UserEmail $email,
-        ?UserPassword $password,
-        ?UserBio $bio,
-        ?UserImage $image
-    ): User {
-        $user = $this->repository->getCurrentUser();
+        ?UserPassword $password
+    ): void {
+        $user = $this->authenticator->getCurrentUser();
 
         if (null === $user) {
             throw new \Exception('Not found');
@@ -29,12 +30,9 @@ final class UserUpdater
 
         $user->update(
             $email,
-            $password,
-            $username,
-            $bio,
-            $image
+            $password
         );
 
-        return $this->repository->save($user);
+        $this->repository->save($user);
     }
 }

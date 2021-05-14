@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\User\Domain;
+namespace App\Shared\Domain\User;
 
 use App\Shared\Domain\ValueObject\UuidValueObject;
 
-final class UserId extends UuidValueObject
+class UserId extends UuidValueObject
 {
 
 }
