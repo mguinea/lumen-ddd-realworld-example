@@ -7,6 +7,7 @@ namespace App\Blog\User\Infrastructure\Persistence\Eloquent;
 use App\Blog\User\Domain\User as DomainUser;
 use App\Blog\User\Domain\UserRepository;
 use App\Shared\Domain\User\UserEmail;
+use App\Shared\Domain\User\UserId;
 use Illuminate\Database\DatabaseManager;
 
 final class EloquentUserRepository implements UserRepository
@@ -23,6 +24,23 @@ final class EloquentUserRepository implements UserRepository
     public function findByEmail(UserEmail $email): ?DomainUser
     {
         $user = $this->model->where('email', $email->value())->first();
+
+        if (null === $user) {
+            return null;
+        }
+
+        return DomainUser::fromPrimitives(
+            $user->id,
+            $user->name,
+            $user->email,
+            $user->bio,
+            $user->image
+        );
+    }
+
+    public function findById(UserId $id): ?DomainUser
+    {
+        $user = $this->model->where('id', $id->value())->first();
 
         if (null === $user) {
             return null;

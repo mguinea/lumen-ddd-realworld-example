@@ -67,6 +67,27 @@ services:
     networks:
       - realworld
 
+  blog-api.queue:
+    build:
+      context: .
+      dockerfile: ./etc/docker/php.Dockerfile
+    container_name: blog-api.queue
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    command: >
+      sh -c "cd apps/blog-api && php artisan queue:listen"
+    volumes:
+      - ./:/var/www
+      - ./etc/infrastructure/config/blog-api/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    depends_on:
+      - blog-api.app
+    networks:
+      - realworld
+
   blog-api.app:
     build:
       context: .
@@ -91,6 +112,33 @@ services:
       - realworld.blog.db
       - realworld.default.db
     command: php -S blog-api.app:8880 -t apps/blog-api/public
+    networks:
+      - realworld
+
+  blog-auth.app:
+    build:
+      context: .
+      dockerfile: ./etc/docker/php.Dockerfile
+    container_name: blog-auth.app
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 8882:8882
+      - 9001:9000
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./etc/infrastructure/config/blog-api/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    env_file:
+      - .env
+    depends_on:
+      - realworld.auth.db
+      - realworld.blog.db
+      - realworld.default.db
+    command: php -S blog-api.app:8882 -t apps/blog-auth/public
     networks:
       - realworld
 

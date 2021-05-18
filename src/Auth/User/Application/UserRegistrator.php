@@ -26,5 +26,6 @@ final class UserRegistrator
         $user = $this->registrator->__invoke($email, $password);
 
         return UserResponse::fromUser($user);
+
     }
 }

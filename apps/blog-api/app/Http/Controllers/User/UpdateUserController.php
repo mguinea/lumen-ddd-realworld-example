@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Apps\BlogApi\App\Http\Controllers\Auth;
+namespace Apps\BlogApi\App\Http\Controllers\User;
 
 use App\Auth\User\Application\UserUpdater;
 use Apps\BlogApi\App\Http\Controllers\Controller;

@@ -11,6 +11,7 @@ abstract class UserDomainEvent extends DomainEvent
     private string $id;
     private string $name;
     private string $email;
+    private string $password;
     private ?string $bio;
     private ?string $image;
 
@@ -18,12 +19,18 @@ abstract class UserDomainEvent extends DomainEvent
         string $id,
         string $name,
         string $email,
+        string $password,
         ?string $bio = null,
-        ?string $image = null
+        ?string $image = null,
+        ?string $eventId = null,
+        ?string $occurredOn = null
     ) {
+        parent::__construct($id, $eventId, $occurredOn);
+
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
+        $this->password = $password;
         $this->bio = $bio;
         $this->image = $image;
     }
@@ -34,8 +41,9 @@ abstract class UserDomainEvent extends DomainEvent
             $user->id()->value(),
             $user->name()->value(),
             $user->email()->value(),
-            null === $user->bio() ? null : $user->bio()->value(),
-            null === $user->image() ? null : $user->image()->value()
+            '',
+            $user->bio()->value(),
+            $user->image()->value()
         );
     }
 
@@ -54,6 +62,11 @@ abstract class UserDomainEvent extends DomainEvent
         return $this->email;
     }
 
+    public function password(): string
+    {
+        return $this->password;
+    }
+
     public function bio(): ?string
     {
         return $this->bio;
@@ -70,6 +83,7 @@ abstract class UserDomainEvent extends DomainEvent
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
+            'password' => $this->password,
             'bio' => $this->bio,
             'image' => $this->image,
         ];

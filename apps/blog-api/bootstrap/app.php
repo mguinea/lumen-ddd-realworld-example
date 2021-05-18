@@ -23,7 +23,6 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-// $app->withFacades();
 $app->withEloquent();
 
 /*
@@ -61,7 +60,9 @@ $app->singleton(
 $app->configure('app');
 $app->configure('auth');
 $app->configure('database');
-// $app->configure('queue');
+$app->configure('queue');
+$app->configure('publisher');
+$app->configure('events');
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +92,7 @@ $app->routeMiddleware(
 |
 */
 
+$app->register(Amranidev\MicroBus\MicroBusServiceProvider::class);
 $app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Auth\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(App\Blog\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
@@ -98,6 +100,7 @@ $app->register(App\Blog\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AppServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AuthServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------

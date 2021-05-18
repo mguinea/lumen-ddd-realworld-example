@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Application;
 
-use App\Auth\User\Domain\UserEmail;
 use App\Auth\User\Domain\UserLogIn as DomainUserLogIn;
+use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserPassword;
 
 final class UserLogIn

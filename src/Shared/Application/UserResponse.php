@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Shared\Application;
 
-final class UserResponse
+use App\Shared\Domain\Bus\Query\Response;
+
+final class UserResponse implements Response
 {
     private string $email;
     private ?string $token;

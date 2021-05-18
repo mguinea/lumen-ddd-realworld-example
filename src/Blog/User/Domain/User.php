@@ -50,15 +50,15 @@ final class User extends AggregateRoot
         UserId $id,
         UserName $name,
         UserEmail $email,
-        UserBio $bio = null,
-        UserImage $image = null
+        UserBio $bio,
+        UserImage $image
     ): self {
         $user = new self(
             $id,
             $name,
             $email,
-            null === $bio ? UserBio::fromValue($bio) : $bio,
-            null === $image ? UserImage::fromValue($image) : $image
+            $bio,
+            $image
         );
 
         $user->record(UserWasCreated::fromUser($user));

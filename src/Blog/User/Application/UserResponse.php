@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Blog\User\Application;
 
-abstract class UserResponse
+use App\Shared\Domain\Bus\Query\Response;
+
+abstract class UserResponse implements Response
 {
     private string $username;
     private string $bio;

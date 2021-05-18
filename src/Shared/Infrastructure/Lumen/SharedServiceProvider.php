@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Lumen;
 
-use App\Shared\Domain\Bus\Event\EventBus;
-use App\Shared\Infrastructure\Bus\Event\Symfony\InMemorySymfonyEventBus;
+use App\Shared\Domain\Bus\Command\CommandBus as CommandBusInterface;
+use App\Shared\Domain\Bus\Event\EventBus as EventBusInterface;
+use App\Shared\Domain\Bus\Query\QueryBus as QueryBusInterface;
+use App\Shared\Infrastructure\Bus\Lumen\CommandBus;
+use App\Shared\Infrastructure\Bus\Lumen\EventBus;
+use App\Shared\Infrastructure\Bus\Lumen\QueryBus;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Messenger\MessageBus;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 final class SharedServiceProvider extends ServiceProvider
 {
@@ -17,13 +19,18 @@ final class SharedServiceProvider extends ServiceProvider
         parent::register();
 
         $this->app->bind(
-            EventBus::class,
-            InMemorySymfonyEventBus::class
+            EventBusInterface::class,
+            EventBus::class
         );
 
         $this->app->bind(
-            MessageBusInterface::class,
-            MessageBus::class
+            QueryBusInterface::class,
+            QueryBus::class
+        );
+
+        $this->app->bind(
+            CommandBusInterface::class,
+            CommandBus::class
         );
     }
 }

@@ -6,18 +6,26 @@ namespace App\Blog\User\Domain;
 
 final class UserWasCreated extends UserDomainEvent
 {
-    public function getEventName(): string
-    {
-        return 'blog.user.was_created';
-    }
-
-    public function fromPrimitives(string $aggregateId, array $body, string $eventId, string $occurredOn): array
-    {
-        // TODO: Implement fromPrimitives() method.
+    public function fromPrimitives(
+        string $aggregateId,
+        array $body,
+        string $eventId,
+        string $occurredOn
+    ): UserWasCreated {
+        return new self(
+            $aggregateId,
+            $body['name'],
+            $body['email'],
+            $body['password'],
+            $body['bio'],
+            $body['image'],
+            $eventId,
+            $occurredOn
+        );
     }
 
     public function eventName(): string
     {
-        // TODO: Implement eventName() method.
+        return 'blog.user.was_created';
     }
 }

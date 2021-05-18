@@ -25,7 +25,7 @@ abstract class DomainEvent
         array $body,
         string $eventId,
         string $occurredOn
-    ): array;
+    ): self;
 
     abstract public function eventName(): string;
 
