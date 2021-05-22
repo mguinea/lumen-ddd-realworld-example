@@ -9,9 +9,9 @@ use DateTimeImmutable;
 
 abstract class DomainEvent
 {
-    private string $aggregateId;
-    private string $eventId;
-    private string $occurredOn;
+    protected string $aggregateId;
+    protected string $eventId;
+    protected string $occurredOn;
 
     public function __construct(string $aggregateId, string $eventId = null, string $occurredOn = null)
     {

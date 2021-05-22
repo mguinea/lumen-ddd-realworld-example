@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Auth\User\Domain;
+namespace App\Shared\Domain\User;
 
 use App\Shared\Domain\ValueObject\NullableStringValueObject;
 

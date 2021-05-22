@@ -7,10 +7,10 @@ use Laravel\Lumen\Routing\Router;
 $router->group(
     [
         'namespace' => 'Auth',
-        'prefix' => 'api/auth/users'
+        'prefix' => 'auth/api/users'
     ],
     function (Router $router) {
-        $router->post('login', ['as' => 'log_in', 'uses' => 'UserLogInController']);
+        $router->post('login', ['as' => 'log_in', 'uses' => 'LogInUserController']);
         $router->post('/', ['as' => 'register', 'uses' => 'RegisterUserController']);
     }
 );

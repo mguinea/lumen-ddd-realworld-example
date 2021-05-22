@@ -27,26 +27,31 @@ networks:
 	@docker network ls
 
 composer-install:
-	@docker exec -it blog-api.app composer install
+	@docker exec -it realworld.blog.app composer install
 
 composer-update:
-	@docker exec -it blog-api.app composer update
+	@docker exec -it realworld.blog.app composer update
 
 composer-dump-autoload:
-	@docker exec -it blog-api.app composer dump-autoload
+	@docker exec -it realworld.blog.app composer dump-autoload
 
 migrate:
-	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan migrate
+	@docker exec -it -w /var/www/apps/blog-api realworld.blog.app php artisan migrate
+	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app php artisan migrate
 
-migrate-fresh:
-	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan migrate:fresh
+migrate-fresh: # TODO no va
+	@docker exec -it -w /var/www/apps/blog-api realworld.blog.app php artisan migrate:fresh
+	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app php artisan migrate:fresh
 
 jwt-secret:
-	@docker exec -it -w /var/www/apps/blog-api blog-api.app php artisan jwt:secret
+	@docker exec -it -w /var/www/apps/blog-api realworld.blog.app php artisan jwt:secret
 
-bash:
-	@docker exec -it -w /var/www/apps/blog-api blog-api.app bash
+bash-api:
+	@docker exec -it -w /var/www/apps/blog-api realworld.blog.app bash
+
+bash-auth:
+	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app bash
 
 .PHONY: tests
 tests:
-	@docker exec -it blog-api.app vendor/bin/phpunit apps/blog-api/tests --order-by=random --configuration=apps/blog-api/phpunit.xml
+	@docker exec -it realworld.blog.app vendor/bin/phpunit apps/blog-api/tests --order-by=random --configuration=apps/blog-api/phpunit.xml

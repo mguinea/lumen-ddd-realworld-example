@@ -28,11 +28,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'username',
+        'id',
         'email',
-        'password',
-        'bio',
-        'image'
+        'password'
     ];
 
     /**
@@ -44,6 +42,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
+    /*
     public static function boot()
     {
         parent::boot();
@@ -54,6 +53,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             }
         );
     }
+    //*/
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

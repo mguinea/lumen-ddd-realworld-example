@@ -6,7 +6,7 @@ namespace App\Auth\User\Infrastructure;
 
 use App\Auth\User\Domain\User as DomainUser;
 use App\Auth\User\Domain\UserAuthenticator;
-use App\Auth\User\Domain\UserToken;
+use App\Shared\Domain\User\UserToken;
 use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserPassword;
 use App\Auth\User\Infrastructure\Persistence\Eloquent\User;
@@ -28,6 +28,7 @@ final class LumenUserAuthenticator implements UserAuthenticator
         $this->model = $model;
         $this->authFactory = $authFactory;
     }
+
     public function getCurrentUser(): ?DomainUser
     {
         $user = $this->authFactory->guard()->user();

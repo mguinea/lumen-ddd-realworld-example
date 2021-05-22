@@ -6,12 +6,12 @@ namespace App\Blog\User\Application;
 
 use App\Shared\Domain\Bus\Query\Response;
 
-abstract class UserResponse implements Response
+abstract class AbstractUserResponse implements Response
 {
-    private string $username;
-    private string $bio;
-    private string $image;
-    private bool $following;
+    protected string $username;
+    protected string $bio;
+    protected string $image;
+    protected bool $following;
 
     public function __construct(
         string $username,

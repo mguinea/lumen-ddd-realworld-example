@@ -4,6 +4,7 @@ namespace App\Auth\User\Domain;
 
 use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserPassword;
+use App\Shared\Domain\User\UserToken;
 
 interface UserAuthenticator
 {

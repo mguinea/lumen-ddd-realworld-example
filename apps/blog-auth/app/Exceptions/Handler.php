@@ -7,8 +7,10 @@ use App\Auth\User\Domain\UserAlreadyRegistered;
 use App\Shared\Domain\NotFoundException;
 use App\Shared\Domain\ValueObject\NotValidValueObjectException;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -23,10 +25,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        // AuthorizationException::class,
-        // HttpException::class,
-        // ModelNotFoundException::class,
-        // ValidationException::class,
+        AuthorizationException::class,
+        HttpException::class,
+        ModelNotFoundException::class,
+        ValidationException::class,
     ];
 
     /**

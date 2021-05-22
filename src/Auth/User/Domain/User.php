@@ -8,6 +8,7 @@ use App\Shared\Domain\AggregateRoot;
 use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserId;
 use App\Shared\Domain\User\UserPassword;
+use App\Shared\Domain\User\UserToken;
 
 final class User extends AggregateRoot
 {
@@ -43,10 +44,11 @@ final class User extends AggregateRoot
     }
 
     public static function register(
+        UserId $id,
         UserEmail $email,
         UserPassword $password
     ): self {
-        $id = UserId::create();
+        $id = $id ?? UserId::create();
 
         $user = self::fromPrimitives(
             $id->value(),

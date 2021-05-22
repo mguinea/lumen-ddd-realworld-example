@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Blog\User\Domain;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
+use App\Shared\Domain\User\UserPassword;
 
 abstract class UserDomainEvent extends DomainEvent
 {
@@ -35,13 +36,13 @@ abstract class UserDomainEvent extends DomainEvent
         $this->image = $image;
     }
 
-    public static function fromUser(User $user): static
+    public static function fromUser(User $user, UserPassword $password): static
     {
         return new static(
             $user->id()->value(),
             $user->name()->value(),
             $user->email()->value(),
-            '',
+            $password->value(),
             $user->bio()->value(),
             $user->image()->value()
         );

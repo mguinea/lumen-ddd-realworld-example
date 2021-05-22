@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Auth\User\Domain;
 
-use App\Auth\User\Domain\UserToken;
+use App\Shared\Domain\User\UserToken;
 use Faker\Factory;
 use Tests\Shared\Domain\Builder;
 
@@ -24,7 +24,7 @@ final class UserTokenBuilder implements Builder
         return $this;
     }
 
-    public function build(): UserToken
+    public function build(): \App\Shared\Domain\User\UserToken
     {
         return new UserToken($this->value);
     }

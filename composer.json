@@ -13,10 +13,12 @@
     }
   ],
   "require": {
-    "amranidev/micro-bus": "^0.2.7",
     "laravel/lumen-framework": "^8.0",
     "php": "^8.0",
-    "tymon/jwt-auth": "^1.0"
+    "symfony/messenger": "^5.0",
+    "tymon/jwt-auth": "^1.0",
+    "lambdish/phunctional": "^2.0",
+    "guzzlehttp/guzzle": "^7.3"
   },
   "require-dev": {
     "fakerphp/faker": "^1.9.1",

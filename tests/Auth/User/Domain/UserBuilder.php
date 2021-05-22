@@ -11,7 +11,7 @@ use App\Auth\User\Domain\UserId;
 use App\Auth\User\Domain\UserImage;
 use App\Auth\User\Domain\UserName;
 use App\Shared\Domain\User\UserPassword;
-use App\Auth\User\Domain\UserToken;
+use App\Shared\Domain\User\UserToken;
 use Tests\Shared\Domain\Builder;
 
 final class UserBuilder implements Builder
@@ -19,7 +19,7 @@ final class UserBuilder implements Builder
     private UserId $id;
     private UserEmail $email;
     private \App\Shared\Domain\User\UserPassword $password;
-    private UserToken $token;
+    private \App\Shared\Domain\User\UserToken $token;
     private UserName $username;
     private UserBio $bio;
     private UserImage $image;

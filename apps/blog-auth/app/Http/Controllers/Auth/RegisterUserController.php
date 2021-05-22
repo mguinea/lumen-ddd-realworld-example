@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Apps\BlogAuth\App\Http\Controllers\Auth;
 
-use App\Blog\User\Application\GetUserByIdQuery;
-use App\Blog\User\Application\RegisterUserCommand;
-use App\Shared\Application\UserResponse;
+use App\Auth\User\Application\GetUserByIdQuery;
+use App\Auth\User\Application\RegisterUserCommand;
+use App\Auth\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
-use App\Shared\Domain\User\UserId;
+use App\Shared\Domain\UuidGenerator;
 use Apps\BlogAuth\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,46 +19,48 @@ final class RegisterUserController extends Controller
 {
     private CommandBus $commandBus;
     private QueryBus $queryBus;
+    private UuidGenerator $generator;
 
     public function __construct(
         CommandBus $commandBus,
-        QueryBus $queryBus
+        QueryBus $queryBus,
+        UuidGenerator $generator
     ) {
         $this->commandBus = $commandBus;
         $this->queryBus = $queryBus;
+        $this->generator = $generator;
     }
 
     public function __invoke(Request $request): JsonResponse
     {
-        dd('stop');
-        // TODO $this->validate($request, [
-        // TODO     'email' => 'required|email|unique:mysql_blog.users,email',
-        // TODO     'password' => 'required'
-        // TODO ]);
-        /*
-        $userData = $request->get('user');
+        $this->validate($request, [
+            'email' => 'required|email|unique:mysql_auth.users,email',
+            'password' => 'required'
+        ]);
 
-        $id = UserId::create();
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        $id = $this->generator->generate();
 
         $this->commandBus->dispatch(
             new RegisterUserCommand(
-                $id->value(),
-                $userData['username'],
-                $userData['email'],
-                $userData['password']
+                $id,
+                $email,
+                $password
             )
         );
 
-        /** @var UserResponse $userResponse *
+        /** @var UserResponse $userResponse */
         $userResponse = $this->queryBus->ask(
             new GetUserByIdQuery(
-                $id->value()
+                $id
             )
         );
 
         return new JsonResponse(
             $userResponse->toArray(),
             Response::HTTP_OK
-        );*/
+        );
     }
 }

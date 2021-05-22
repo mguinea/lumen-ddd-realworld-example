@@ -6,7 +6,7 @@ namespace Apps\BlogApi\App\Http\Controllers\User;
 
 
 use App\Blog\User\Application\GetUserByIdQuery;
-use App\Blog\User\Application\ProfileResponse;
+use App\Blog\User\Application\ProfileResponseAbstract;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -25,7 +25,7 @@ final class GetCurrentUserController extends Controller
 
     public function __invoke(Request $request, string $id): JsonResponse
     {
-        /** @var ProfileResponse $profileResponse */
+        /** @var ProfileResponseAbstract $profileResponse */
         $profileResponse = $this->queryBus->ask(
             new GetUserByIdQuery($id)
         );

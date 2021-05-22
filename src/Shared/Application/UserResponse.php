@@ -6,6 +6,7 @@ namespace App\Shared\Application;
 
 use App\Shared\Domain\Bus\Query\Response;
 
+// TODO move to blog api context, this is not shared
 final class UserResponse implements Response
 {
     private string $email;

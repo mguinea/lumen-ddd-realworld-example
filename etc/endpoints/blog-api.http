@@ -1,17 +1,33 @@
-# Register
-POST localhost:8880/api/users
-Content-Type: application/json
+###########################
+# AUTH API
+###########################
+
+###
+# 1 Registration
+POST localhost:8879/auth/api/users
+Content-Type: application/json;
 
 {
-    "user": {
-        "email": "jake@jake.jake",
-        "username": "Jacob",
-        "password": "jakejake"
-    }
+    "email": "jake@jake.jake",
+    "password": "jakejake"
 }
 
 ###
-# Authentication
+# 2 Authentication
+POST localhost:8879/auth/api/users/login
+Content-Type: application/json;
+
+{
+    "email": "jake@jake.jake",
+    "password": "jakejake"
+}
+
+###########################
+# REAL WORLD BLOG API
+###########################
+
+###
+# 3 Authentication
 POST localhost:8880/api/users/login
 Content-Type: application/json
 
@@ -23,16 +39,32 @@ Content-Type: application/json
 }
 
 ###
+# 4 Registration
+POST localhost:8880/api/users
+Content-Type: application/json;
+
+{
+    "user": {
+        "email": "jake@jake.jake",
+        "username": "Jacob",
+        "password": "jakejake"
+    }
+}
+
+###
+# Get current user
+GET localhost:8880/api/user
+Content-Type: application/json;
+
+###
 # Update
-PUT localhost:8880/api/users
-Content-Type: application/json
+PUT localhost:8880/api/user
+Content-Type: application/json;
 
 {
     "user":{
-        "username": "Marc",
         "email": "jake@jake.jake",
-        "password": "jakejake",
-        "bio": "lorem",
-        "image": "ipsum"
+        "bio": "I like to skateboard",
+        "image": "https://i.stack.imgur.com/xHWG8.jpg"
     }
 }

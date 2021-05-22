@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\Blog\User\Infrastructure;
 
-use App\Blog\User\Domain\AuthUserRegistrar;
+use App\Blog\User\Domain\UserAuthenticator;
 use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserPassword;
+use App\Shared\Domain\User\UserToken;
 use Illuminate\Http\Client\Factory;
 
-final class HttpAuthUserRegistrar implements AuthUserRegistrar
+final class HttpUserAuthenticator implements UserAuthenticator
 {
     private Factory $http;
 
@@ -18,12 +19,15 @@ final class HttpAuthUserRegistrar implements AuthUserRegistrar
         $this->http = $http;
     }
 
-    public function register(UserEmail $email, UserPassword $password): void
+    public function logIn(UserEmail $email, UserPassword $password): ?UserToken
     {
         // TODO url from env
-        $this->http->post('blog-auth.app:8879/api/auth/users', [
+
+        $response = $this->http->post('realworld.auth.app:8879/auth/api/users/login', [
             'email' => $email->value(),
             'password' => $password->value()
         ]);
+
+        return UserToken::fromValue($response->json('token'));
     }
 }

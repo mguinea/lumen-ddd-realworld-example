@@ -41,22 +41,6 @@ return [
             'prefix' => env('DB_PREFIX', ''),
         ],
 
-        'mysql_auth' => [
-            'driver' => 'mysql',
-            'host' => env('DB_AUTH_HOST', '127.0.0.1'),
-            'port' => env('DB_AUTH_PORT', 3306),
-            'database' => env('DB_AUTH_DATABASE', 'forge'),
-            'username' => env('DB_AUTH_USERNAME', 'forge'),
-            'password' => env('DB_AUTH_PASSWORD', ''),
-            'unix_socket' => env('DB_AUTH_SOCKET', ''),
-            'charset' => env('DB_AUTH_CHARSET', 'utf8mb4'),
-            'collation' => env('DB_AUTH_COLLATION', 'utf8mb4_unicode_ci'),
-            'prefix' => env('DB_AUTH_PREFIX', ''),
-            'strict' => env('DB_AUTH_STRICT_MODE', true),
-            'engine' => env('DB_AUTH_ENGINE', null),
-            'timezone' => env('DB_AUTH_TIMEZONE', '+00:00'),
-        ],
-
         'mysql_blog' => [
             'driver' => 'mysql',
             'host' => env('DB_BLOG_HOST', '127.0.0.1'),

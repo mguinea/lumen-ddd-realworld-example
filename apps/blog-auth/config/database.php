@@ -57,22 +57,6 @@ return [
             'timezone' => env('DB_AUTH_TIMEZONE', '+00:00'),
         ],
 
-        'mysql_blog' => [
-            'driver' => 'mysql',
-            'host' => env('DB_BLOG_HOST', '127.0.0.1'),
-            'port' => env('DB_BLOG_PORT', 3306),
-            'database' => env('DB_BLOG_DATABASE', 'forge'),
-            'username' => env('DB_BLOG_USERNAME', 'forge'),
-            'password' => env('DB_BLOG_PASSWORD', ''),
-            'unix_socket' => env('DB_BLOG_SOCKET', ''),
-            'charset' => env('DB_BLOG_CHARSET', 'utf8mb4'),
-            'collation' => env('DB_BLOG_COLLATION', 'utf8mb4_unicode_ci'),
-            'prefix' => env('DB_BLOG_PREFIX', ''),
-            'strict' => env('DB_BLOG_STRICT_MODE', true),
-            'engine' => env('DB_BLOG_ENGINE', null),
-            'timezone' => env('DB_BLOG_TIMEZONE', '+00:00'),
-        ],
-
         'mysql_default' => [
             'driver' => 'mysql',
             'host' => env('DB_DEFAULT_HOST', '127.0.0.1'),

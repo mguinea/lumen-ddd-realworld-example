@@ -5,38 +5,50 @@ declare(strict_types=1);
 namespace App\Auth\User\Application;
 
 use App\Auth\User\Domain\User;
+use App\Shared\Domain\User\UserToken;
+use App\Shared\Domain\Bus\Query\Response;
 
-final class UserResponse
+final class UserResponse implements Response
 {
+    private string $id;
     private string $email;
     private ?string $token;
-    private string $username;
-    private ?string $bio;
-    private ?string $image;
 
     public function __construct(
+        string $id,
         string $email,
-        ?string $token,
-        string $username,
-        ?string $bio,
-        ?string $image
+        ?string $token
     ) {
+        $this->id = $id;
         $this->email = $email;
         $this->token = $token;
-        $this->username = $username;
-        $this->bio = $bio;
-        $this->image = $image;
     }
 
     public static function fromUser(User $user): self
     {
         return new self(
+            $user->id()->value(),
             $user->email()->value(),
-            $user->token()->value(),
-            $user->username()->value(),
-            $user->bio()->value(),
-            $user->image()->value()
+            $user->token()->value()
         );
+    }
+
+    public static function fromPrimitives(
+        string $id,
+        string $email,
+        string $token
+    ): self
+    {
+        return new self(
+            $id,
+            $email,
+            $token
+        );
+    }
+
+    public function id(): string
+    {
+        return $this->id;
     }
 
     public function email(): string
@@ -49,29 +61,12 @@ final class UserResponse
         return $this->token;
     }
 
-    public function username(): string
-    {
-        return $this->username;
-    }
-
-    public function bio(): ?string
-    {
-        return $this->bio;
-    }
-
-    public function image(): ?string
-    {
-        return $this->image;
-    }
-
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'email' => $this->email,
-            'token' => $this->token,
-            'username' => $this->username,
-            'bio' => $this->bio,
-            'image' => $this->image
+            'token' => $this->token
         ];
     }
 }

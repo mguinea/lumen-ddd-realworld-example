@@ -7,6 +7,7 @@ namespace App\Blog\User\Domain;
 use App\Shared\Domain\AggregateRoot;
 use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserId;
+use App\Shared\Domain\User\UserPassword;
 
 final class User extends AggregateRoot
 {
@@ -50,6 +51,7 @@ final class User extends AggregateRoot
         UserId $id,
         UserName $name,
         UserEmail $email,
+        UserPassword $password,
         UserBio $bio,
         UserImage $image
     ): self {
@@ -61,7 +63,7 @@ final class User extends AggregateRoot
             $image
         );
 
-        $user->record(UserWasCreated::fromUser($user));
+        $user->record(UserWasCreated::fromUser($user, $password));
 
         return $user;
     }

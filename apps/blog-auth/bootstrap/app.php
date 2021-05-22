@@ -23,6 +23,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->withFacades();
 $app->withEloquent();
 
 /*
@@ -41,11 +42,6 @@ $app->singleton(
     Apps\BlogAuth\App\Exceptions\Handler::class
 );
 
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    Apps\BlogAuth\App\Console\Kernel::class
-);
-
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -60,8 +56,6 @@ $app->singleton(
 $app->configure('app');
 $app->configure('auth');
 $app->configure('database');
-$app->configure('queue');
-$app->configure('publishers');
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +85,6 @@ $app->routeMiddleware(
 |
 */
 
-$app->register(Amranidev\MicroBus\MicroBusServiceProvider::class);
 $app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Auth\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(Apps\BlogAuth\App\Providers\AppServiceProvider::class);

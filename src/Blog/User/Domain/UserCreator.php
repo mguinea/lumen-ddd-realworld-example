@@ -13,16 +13,13 @@ final class UserCreator
 {
     private UserRepository $repository;
     private EventBus $eventBus;
-    private AuthUserRegistrar $registrar;
 
     public function __construct(
         UserRepository $repository,
-        EventBus $eventBus,
-        AuthUserRegistrar $registrar
+        EventBus $eventBus
     ) {
         $this->repository = $repository;
         $this->eventBus = $eventBus;
-        $this->registrar = $registrar;
     }
 
     public function __invoke(
@@ -41,13 +38,9 @@ final class UserCreator
             $id,
             $name,
             $email,
+            $password,
             UserBio::fromValue(null),
             UserImage::fromValue(null)
-        );
-
-        $this->registrar->register(
-            $email,
-            $password
         );
 
         $this->repository->save($user);
