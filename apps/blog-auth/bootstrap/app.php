@@ -42,6 +42,11 @@ $app->singleton(
     Apps\BlogAuth\App\Exceptions\Handler::class
 );
 
+$app->singleton(
+    Illuminate\Contracts\Console\Kernel::class,
+    Apps\BlogApi\App\Console\Kernel::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -59,23 +64,6 @@ $app->configure('database');
 
 /*
 |--------------------------------------------------------------------------
-| Register Middleware
-|--------------------------------------------------------------------------
-|
-| Next, we will register the middleware with the application. These can
-| be global middleware that run before and after each request into a
-| route or middleware that'll be assigned to some specific routes.
-|
-*/
-
-$app->routeMiddleware(
-    [
-        'auth' => Apps\BlogAuth\App\Http\Middleware\Authenticate::class,
-    ]
-);
-
-/*
-|--------------------------------------------------------------------------
 | Register Service Providers
 |--------------------------------------------------------------------------
 |
@@ -88,9 +76,8 @@ $app->routeMiddleware(
 $app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Auth\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(Apps\BlogAuth\App\Providers\AppServiceProvider::class);
-$app->register(Apps\BlogAuth\App\Providers\AuthServiceProvider::class);
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
-
+$app->register(Apps\BlogAuth\App\Providers\AuthServiceProvider::class); // TODO required?
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class); // TODO required?
 
 /*
 |--------------------------------------------------------------------------

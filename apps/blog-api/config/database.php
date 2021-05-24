@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql_default'),
+    'default' => env('DB_CONNECTION', 'mysql_blog'),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,22 +55,6 @@ return [
             'strict' => env('DB_BLOG_STRICT_MODE', true),
             'engine' => env('DB_BLOG_ENGINE', null),
             'timezone' => env('DB_BLOG_TIMEZONE', '+00:00'),
-        ],
-
-        'mysql_default' => [
-            'driver' => 'mysql',
-            'host' => env('DB_DEFAULT_HOST', '127.0.0.1'),
-            'port' => env('DB_DEFAULT_PORT', 3306),
-            'database' => env('DB_DEFAULT_DATABASE', 'forge'),
-            'username' => env('DB_DEFAULT_USERNAME', 'forge'),
-            'password' => env('DB_DEFAULT_PASSWORD', ''),
-            'unix_socket' => env('DB_DEFAULT_SOCKET', ''),
-            'charset' => env('DB_DEFAULT_CHARSET', 'utf8mb4'),
-            'collation' => env('DB_DEFAULT_COLLATION', 'utf8mb4_unicode_ci'),
-            'prefix' => env('DB_DEFAULT_PREFIX', ''),
-            'strict' => env('DB_DEFAULT_STRICT_MODE', true),
-            'engine' => env('DB_DEFAULT_ENGINE', null),
-            'timezone' => env('DB_DEFAULT_TIMEZONE', '+00:00'),
         ],
 
         'pgsql' => [

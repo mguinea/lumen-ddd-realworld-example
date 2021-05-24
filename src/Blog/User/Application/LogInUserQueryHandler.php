@@ -6,7 +6,7 @@ namespace App\Blog\User\Application;
 
 use App\Blog\User\Domain\UserAuthenticator;
 use App\Blog\User\Domain\UserRepository;
-use App\Shared\Application\UserResponse;
+use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\User\UserEmail;
 use App\Shared\Domain\User\UserPassword;

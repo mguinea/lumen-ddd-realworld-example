@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Apps\BlogApi\App\Http\Controllers\User;
 
 use App\Blog\User\Application\LogInUserQuery;
-use App\Shared\Application\UserResponse;
+use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;

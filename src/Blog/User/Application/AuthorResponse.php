@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Blog\User\Application;
 
-final class ProfileResponseAbstract extends AbstractUserResponse
+final class AuthorResponse extends AbstractUserResponse
 {
     public function toArray(): array
     {
         return [
-            'profile' => [
+            'author' => [
                 'username' => $this->username(),
                 'bio' => $this->bio(),
                 'image' => $this->image(),

@@ -6,7 +6,7 @@ namespace Apps\BlogApi\App\Http\Controllers\User;
 
 use App\Blog\User\Application\GetUserByIdQuery;
 use App\Blog\User\Application\RegisterUserCommand;
-use App\Shared\Application\UserResponse;
+use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\User\UserId;
