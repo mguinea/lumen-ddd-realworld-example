@@ -9,14 +9,12 @@ use DateTimeImmutable;
 
 abstract class DomainEvent
 {
-    protected string $aggregateId;
-    protected string $eventId;
-    protected string $occurredOn;
+    private string $eventId;
+    private string $occurredOn;
 
-    public function __construct(string $aggregateId, string $eventId = null, string $occurredOn = null)
+    public function __construct(private string $aggregateId, string $eventId = null, string $occurredOn = null)
     {
-        $this->aggregateId = $aggregateId;
-        $this->eventId = $eventId ?: UuidValueObject::create()->value();
+        $this->eventId    = $eventId ?: UuidValueObject::create()->value();
         $this->occurredOn = $occurredOn ?: (new DateTimeImmutable('now'))->format("Y-m-d h:i:s");
     }
 

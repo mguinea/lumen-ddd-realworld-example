@@ -13,11 +13,8 @@ use App\Shared\Domain\User\UserPassword;
 
 final class RegisterUserCommandHandler implements CommandHandler
 {
-    private UserCreator $creator;
-
-    public function __construct(UserCreator $creator)
+    public function __construct(private UserCreator $creator)
     {
-        $this->creator = $creator;
     }
 
     public function __invoke(RegisterUserCommand $command): void

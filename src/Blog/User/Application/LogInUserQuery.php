@@ -8,13 +8,10 @@ use App\Shared\Domain\Bus\Query\Query;
 
 final class LogInUserQuery implements Query
 {
-    private string $email;
-    private string $password;
-
-    public function __construct(string $email, string $password)
-    {
-        $this->email = $email;
-        $this->password = $password;
+    public function __construct(
+        private string $email,
+        private string $password
+    ) {
     }
 
     public function email(): string

@@ -12,21 +12,12 @@ use App\Shared\Domain\User\UserToken;
 
 final class User extends AggregateRoot
 {
-    private UserId $id;
-    private UserEmail $email;
-    private UserPassword $password;
-    private UserToken $token;
-
     public function __construct(
-        UserId $id,
-        UserEmail $email,
-        UserPassword $password,
-        UserToken $token
+        private UserId $id,
+        private UserEmail $email,
+        private UserPassword $password,
+        private UserToken $token
     ) {
-        $this->id = $id;
-        $this->email = $email;
-        $this->password = $password;
-        $this->token = $token;
     }
 
     public static function fromPrimitives(

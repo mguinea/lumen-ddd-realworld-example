@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace Tests\Auth\User\Domain;
 
 use App\Auth\User\Domain\User;
-use App\Auth\User\Domain\UserBio;
-use App\Auth\User\Domain\UserEmail;
-use App\Auth\User\Domain\UserId;
-use App\Auth\User\Domain\UserImage;
-use App\Auth\User\Domain\UserName;
+use App\Shared\Domain\User\UserEmail;
+use App\Shared\Domain\User\UserId;
 use App\Shared\Domain\User\UserPassword;
 use App\Shared\Domain\User\UserToken;
 use Tests\Shared\Domain\Builder;
@@ -18,11 +15,8 @@ final class UserBuilder implements Builder
 {
     private UserId $id;
     private UserEmail $email;
-    private \App\Shared\Domain\User\UserPassword $password;
-    private \App\Shared\Domain\User\UserToken $token;
-    private UserName $username;
-    private UserBio $bio;
-    private UserImage $image;
+    private UserPassword $password;
+    private UserToken $token;
 
     public function __construct()
     {
@@ -30,9 +24,6 @@ final class UserBuilder implements Builder
         $this->email = (new UserEmailBuilder())->build();
         $this->password = (new UserPasswordBuilder())->build();
         $this->token = (new UserTokenBuilder())->build();
-        $this->username = (new UserNameBuilder())->build();
-        $this->bio = (new UserBioBuilder())->build();
-        $this->image = (new UserImageBuilder())->build();
     }
 
     public function withId(UserId $id): self
@@ -63,37 +54,13 @@ final class UserBuilder implements Builder
         return $this;
     }
 
-    public function withUsername(UserName $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function withBio(UserBio $bio): self
-    {
-        $this->bio = $bio;
-
-        return $this;
-    }
-
-    public function withImage(UserImage $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function build(): User
     {
         return new User(
             $this->id,
             $this->email,
             $this->password,
-            $this->token,
-            $this->username,
-            $this->bio,
-            $this->image
+            $this->token
         );
     }
 }

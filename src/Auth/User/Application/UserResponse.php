@@ -5,23 +5,15 @@ declare(strict_types=1);
 namespace App\Auth\User\Application;
 
 use App\Auth\User\Domain\User;
-use App\Shared\Domain\User\UserToken;
 use App\Shared\Domain\Bus\Query\Response;
 
 final class UserResponse implements Response
 {
-    private string $id;
-    private string $email;
-    private ?string $token;
-
     public function __construct(
-        string $id,
-        string $email,
-        ?string $token
+        private string $id,
+        private string $email,
+        private ?string $token
     ) {
-        $this->id = $id;
-        $this->email = $email;
-        $this->token = $token;
     }
 
     public static function fromUser(User $user): self

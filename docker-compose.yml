@@ -95,6 +95,20 @@ services:
     networks:
       - realworld
 
+  realworld.test.db: # TODO revisar que los tests usan este sqlite
+    image: keinos/sqlite3
+    container_name: realworld.test.db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - 3362:3306
+    env_file:
+      - .env
+    volumes:
+      - realworld-dbdata-test:/var/lib/mysql/
+    networks:
+      - realworld
+
   realworld.phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: realworld.phpmyadmin
@@ -140,4 +154,6 @@ volumes:
   realworld-dbdata-auth:
     driver: local
   realworld-dbdata-blog:
+    driver: local
+  realworld-dbdata-test:
     driver: local

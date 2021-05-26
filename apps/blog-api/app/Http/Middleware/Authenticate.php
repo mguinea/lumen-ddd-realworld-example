@@ -2,41 +2,28 @@
 
 namespace Apps\BlogApi\App\Http\Middleware;
 
+use App\Auth\User\Domain\AuthenticationException;
+use App\Blog\User\Domain\UserAuthenticator;
+use App\Shared\Domain\User\UserToken;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Authenticate
 {
-    /**
-     * The authentication guard factory instance.
-     *
-     * @var \Illuminate\Contracts\Auth\Factory
-     */
-    protected $auth;
-
-    /**
-     * Create a new middleware instance.
-     *
-     * @param  \Illuminate\Contracts\Auth\Factory  $auth
-     * @return void
-     */
-    public function __construct(Auth $auth)
+    public function __construct(protected Auth $auth, private UserAuthenticator $authenticator)
     {
-        $this->auth = $auth;
     }
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
-     */
     public function handle($request, Closure $next, $guard = null)
-    {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+    {   // TODO call to every protected request to validate token
+        if (!$request->bearerToken()) {
+            throw new AuthenticationException();
+        }
+
+        if (!$this->authenticator->validate(
+            UserToken::fromValue($request->bearerToken())
+        )) {
+            throw new AuthenticationException();
         }
 
         return $next($request);

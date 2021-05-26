@@ -6,6 +6,7 @@ namespace Apps\BlogAuth\App\Http\Controllers\Auth;
 
 use App\Auth\User\Application\LogInUserQuery;
 use App\Shared\Domain\Bus\Query\QueryBus;
+use App\Shared\Domain\RequestValidator;
 use Apps\BlogAuth\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,15 +14,22 @@ use Illuminate\Http\Response;
 
 final class LogInUserController extends Controller
 {
-    private QueryBus $queryBus;
-
-    public function __construct(QueryBus $queryBus)
-    {
-        $this->queryBus = $queryBus;
+    public function __construct(
+        private QueryBus $queryBus,
+        private RequestValidator $validator
+    ) {
     }
 
     public function __invoke(Request $request): JsonResponse
     {
+        $this->validator->validate(
+            $request,
+            [
+                'email' => 'required|email|exists:mysql_auth.users,email',
+                'password' => 'required'
+            ]
+        );
+
         $email = $request->get('email');
         $password = $request->get('password');
 

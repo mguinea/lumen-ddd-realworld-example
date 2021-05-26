@@ -6,21 +6,19 @@
          cacheResult="false"
 >
     <testsuites>
-        <testsuite name="Blog API Application Test Suite">
+        <testsuite name="Blog Auth Application Test Suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
-            <directory suffix=".php">./apps/blog-api/app</directory>
+            <directory suffix=".php">./apps/blog-auth/app</directory>
         </include>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>
-        <server name="APP_DEBUG" value="true"/>
+        <server name="APP_DEBUG" value="false"/>
         <server name="CACHE_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
-        <server name="DB_CONNECTION" value="sqlite"/>
-        <server name="DB_DATABASE" value=":memory:"/>
     </php>
 </phpunit>

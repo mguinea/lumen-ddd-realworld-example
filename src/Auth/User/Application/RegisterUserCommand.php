@@ -8,18 +8,11 @@ use App\Shared\Domain\Bus\Command\Command;
 
 final class RegisterUserCommand implements Command
 {
-    private string $id;
-    private string $email;
-    private string $password;
-
     public function __construct(
-        string $id,
-        string $email,
-        string $password
+        private string $id,
+        private string $email,
+        private string $password
     ) {
-        $this->id = $id;
-        $this->email = $email;
-        $this->password = $password;
     }
 
     public function id(): string
@@ -39,6 +32,6 @@ final class RegisterUserCommand implements Command
 
     public function commandName(): string
     {
-        return 'realworld.auth.user.register';
+        return 'realworld.auth.user.register'; // TODO
     }
 }

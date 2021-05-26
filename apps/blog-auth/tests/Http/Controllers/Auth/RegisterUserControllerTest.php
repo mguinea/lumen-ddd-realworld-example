@@ -6,27 +6,22 @@ namespace Apps\BlogAuth\Tests\Http\Controllers\Auth;
 
 use Apps\BlogAuth\Tests\TestCase;
 use Illuminate\Http\Response;
-use Laravel\Lumen\Testing\DatabaseMigrations;
-use Tests\Auth\User\Domain\UserBioBuilder;
+use Laravel\Lumen\Testing\DatabaseTransactions;
 use Tests\Auth\User\Domain\UserBuilder;
-use Tests\Auth\User\Domain\UserImageBuilder;
 
 final class RegisterUserControllerTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTransactions;
 
-    private string $endpoint = '/api/users';
+    private string $endpoint = '/auth/api/users';
 
     public function testRegisterUser()
     {
         $user = (new UserBuilder())->build();
 
         $payload = [
-            'user' => [
-                'username' => $user->username()->value(),
-                'email' => $user->email()->value(),
-                'password' => $user->password()->value()
-            ]
+            'email' => $user->email()->value(),
+            'password' => $user->password()->value()
         ];
 
         $this->post($this->endpoint, $payload);
@@ -34,68 +29,28 @@ final class RegisterUserControllerTest extends TestCase
         $this->response
             ->assertJson(
                 [
-                    'user' => [
-                        'email' => $user->email()->value(),
-                        'username' => $user->username()->value(),
-                        'bio' => null,
-                        'image' => null
-                    ]
-                ]
-            )->assertStatus(Response::HTTP_OK);
-    }
-
-    public function testRegisterUserWithoutOptionalFields()
-    {
-        $user = (new UserBuilder())
-            ->withBio((new UserBioBuilder())->withValue()->build())
-            ->withImage((new UserImageBuilder())->withValue()->build())
-            ->build();
-
-        $payload = [
-            'user' => [
-                'username' => $user->username()->value(),
-                'email' => $user->email()->value(),
-                'password' => $user->password()->value(),
-                'bio' => $user->bio()->value(),
-                'image' => $user->image()->value()
-            ]
-        ];
-
-        $this->post($this->endpoint, $payload);
-
-        $this->response
-            ->assertJson(
-                [
-                    'user' => [
-                        'email' => $user->email()->value(),
-                        'username' => $user->username()->value(),
-                        'bio' => $user->bio()->value(),
-                        'image' => $user->image()->value()
-                    ]
+                    'email' => $user->email()->value(),
+                    'token' => null
                 ]
             )->assertStatus(Response::HTTP_OK);
     }
 
     public function testCannotRegisterUserWithoutEmail()
     {
-        $user = (new UserBuilder())->build();
-
-        $payload = [
-            'user' => [
-                'username' => $user->username()->value(),
-                'password' => $user->password()->value(),
-                'bio' => $user->bio()->value(),
-                'image' => $user->image()->value()
-            ]
-        ];
+        $payload = [];
 
         $this->post($this->endpoint, $payload);
 
         $this->response
-            ->assertJson(
+            ->assertExactJson(
                 [
                     'errors' => [
-                        'email' => "can't be empty"
+                        'email' => [
+                            "The email field is required."
+                        ],
+                        'password' => [
+                            "The password field is required."
+                        ]
                     ]
                 ]
             )->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);

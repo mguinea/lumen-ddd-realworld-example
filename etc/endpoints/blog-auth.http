@@ -1,0 +1,19 @@
+###
+# 1 Registration
+POST localhost:8879/auth/api/users
+Content-Type: application/json;
+
+{
+    "email": "jake@jake.jake",
+    "password": "jakejake"
+}
+
+###
+# 2 Authentication
+POST localhost:8879/auth/api/users/login
+Content-Type: application/json;
+
+{
+    "email": "jake@jake.jake",
+    "password": "jakejake"
+}

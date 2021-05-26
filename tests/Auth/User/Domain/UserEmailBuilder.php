@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Auth\User\Domain;
 
-use App\Auth\User\Domain\UserEmail;
+use App\Shared\Domain\User\UserEmail;
 use Faker\Factory;
 use Tests\Shared\Domain\Builder;
 
@@ -26,6 +26,6 @@ final class UserEmailBuilder implements Builder
 
     public function build(): UserEmail
     {
-        return new UserEmail($this->value);
+        return UserEmail::fromValue($this->value);
     }
 }

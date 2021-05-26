@@ -8,6 +8,6 @@ final class UserWasRegistered extends UserDomainEvent
 {
     public function eventName(): string
     {
-        return 'realworld.auth.user_was_registered';
+        return 'realworld.auth.user_was_registered'; // TODO
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Apps\BlogApi\App\Exceptions;
 
-use App\Auth\User\Domain\AuthorizationException;
+use App\Auth\User\Domain\AuthenticationException;
 use App\Auth\User\Domain\UserAlreadyRegistered;
 use App\Shared\Domain\NotFoundException;
 use App\Shared\Domain\ValueObject\NotValidValueObjectException;
@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
             return new JsonResponse($errors, Response::HTTP_NOT_FOUND);
         }
 
-        if ($e instanceof AuthorizationException) {
+        if ($e instanceof AuthenticationException) {
             return new JsonResponse('Not authorized', Response::HTTP_UNAUTHORIZED);
         }
 

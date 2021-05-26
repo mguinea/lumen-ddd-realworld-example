@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Blog\User\Infrastructure\Lumen;
 
+use App\Blog\User\Application\CreateAuthUserListener;
+use App\Blog\User\Application\GetCurrentUserQueryHandler;
 use App\Blog\User\Application\GetUserByIdQueryHandler;
 use App\Blog\User\Application\LogInUserQueryHandler;
 use App\Blog\User\Application\RegisterUserCommandHandler;
@@ -47,8 +49,18 @@ final class UserServiceProvider extends ServiceProvider
         );
 
         $this->app->tag(
+            GetCurrentUserQueryHandler::class,
+            'realworld.query_handler'
+        );
+
+        $this->app->tag(
             RegisterUserCommandHandler::class,
             'realworld.command_handler'
+        );
+
+        $this->app->tag(
+            CreateAuthUserListener::class,
+            'realworld.domain_event_subscriber'
         );
     }
 }

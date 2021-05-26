@@ -14,3 +14,13 @@ $router->group(
         $router->post('/', ['as' => 'register', 'uses' => 'RegisterUserController']);
     }
 );
+
+$router->group(
+    [
+        'namespace' => 'Auth',
+        'prefix' => 'auth/api/tokens'
+    ],
+    function (Router $router) {
+        $router->post('/validate', ['as' => 'validate_token', 'uses' => 'ValidateTokenController']);
+    }
+);

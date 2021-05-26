@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApiUsersTable extends Migration
+class CreateUsersTable extends Migration
 {
     protected $connection = 'mysql_auth';
 

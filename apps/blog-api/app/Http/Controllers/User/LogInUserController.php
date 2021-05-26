@@ -14,11 +14,8 @@ use Illuminate\Http\Response;
 
 final class LogInUserController extends Controller
 {
-    private QueryBus $queryBus;
-
-    public function __construct(QueryBus $queryBus)
+    public function __construct(private QueryBus $queryBus)
     {
-        $this->queryBus = $queryBus;
     }
 
     public function __invoke(Request $request): JsonResponse

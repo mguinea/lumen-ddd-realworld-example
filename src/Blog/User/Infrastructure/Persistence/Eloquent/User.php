@@ -2,7 +2,6 @@
 
 namespace App\Blog\User\Infrastructure\Persistence\Eloquent;
 
-use App\Shared\Domain\User\UserId;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
@@ -21,15 +20,4 @@ class User extends Model
         'bio',
         'image'
     ];
-
-    // public static function boot()
-    // {
-    //     parent::boot();
-//
-    //     static::creating(
-    //         function ($model) {
-    //             $model->id = UserId::create()->value();
-    //         }
-    //     );
-    // }
 }

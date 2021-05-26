@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\User\Application;
 
+use App\Auth\User\Domain\UserNotFound;
 use App\Auth\User\Domain\UserRepository;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\User\UserId;
@@ -20,7 +21,7 @@ final class GetUserByIdQueryHandler implements QueryHandler
         $user = $this->repository->findById($id);
 
         if (null === $user) {
-            throw new \Exception('User not found');
+            throw new UserNotFound();
         }
 
         return UserResponse::fromUser($user);

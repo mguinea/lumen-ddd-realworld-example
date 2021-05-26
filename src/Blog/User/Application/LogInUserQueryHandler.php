@@ -13,13 +13,10 @@ use App\Shared\Domain\User\UserPassword;
 
 final class LogInUserQueryHandler implements QueryHandler
 {
-    private UserAuthenticator $authenticator;
-    private UserRepository $repository;
-
-    public function __construct(UserAuthenticator $authenticator, UserRepository $repository)
-    {
-        $this->authenticator = $authenticator;
-        $this->repository = $repository;
+    public function __construct(
+        private UserAuthenticator $authenticator,
+        private UserRepository $repository
+    ) {
     }
 
     public function __invoke(LogInUserQuery $query): UserResponse

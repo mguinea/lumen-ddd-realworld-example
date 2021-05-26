@@ -24,8 +24,8 @@ final class UserTokenBuilder implements Builder
         return $this;
     }
 
-    public function build(): \App\Shared\Domain\User\UserToken
+    public function build(): UserToken
     {
-        return new UserToken($this->value);
+        return UserToken::fromValue($this->value);
     }
 }

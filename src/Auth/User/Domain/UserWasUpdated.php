@@ -6,8 +6,8 @@ namespace App\Auth\User\Domain;
 
 final class UserWasUpdated extends UserDomainEvent
 {
-    public function getEventName(): string
+    public function eventName(): string
     {
-        // TODO: Implement getEventName() method.
+        return 'realworld.auth.user_was_updated'; // TODO
     }
 }

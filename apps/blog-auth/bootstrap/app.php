@@ -59,7 +59,6 @@ $app->singleton(
 */
 
 $app->configure('app');
-$app->configure('auth');
 $app->configure('database');
 
 /*
@@ -76,8 +75,6 @@ $app->configure('database');
 $app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Auth\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(Apps\BlogAuth\App\Providers\AppServiceProvider::class);
-$app->register(Apps\BlogAuth\App\Providers\AuthServiceProvider::class); // TODO required?
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class); // TODO required?
 
 /*
 |--------------------------------------------------------------------------

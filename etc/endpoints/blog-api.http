@@ -1,33 +1,5 @@
-###########################
-# AUTH API
-###########################
-
 ###
-# 1 Registration
-POST localhost:8879/auth/api/users
-Content-Type: application/json;
-
-{
-    "email": "jake@jake.jake",
-    "password": "jakejake"
-}
-
-###
-# 2 Authentication
-POST localhost:8879/auth/api/users/login
-Content-Type: application/json;
-
-{
-    "email": "jake@jake.jake",
-    "password": "jakejake"
-}
-
-###########################
-# REAL WORLD BLOG API
-###########################
-
-###
-# 3 Authentication
+# 1 Authentication
 POST localhost:8880/api/users/login
 Content-Type: application/json
 
@@ -39,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-# 4 Registration
+# 2 Registration
 POST localhost:8880/api/users
 Content-Type: application/json;
 
@@ -52,12 +24,12 @@ Content-Type: application/json;
 }
 
 ###
-# Get current user
+# 3 Get current user
 GET localhost:8880/api/user
 Content-Type: application/json;
 
 ###
-# Update
+# 4 Update user
 PUT localhost:8880/api/user
 Content-Type: application/json;
 

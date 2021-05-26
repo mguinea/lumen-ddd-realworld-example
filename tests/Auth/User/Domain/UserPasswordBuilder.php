@@ -24,8 +24,8 @@ final class UserPasswordBuilder implements Builder
         return $this;
     }
 
-    public function build(): \App\Shared\Domain\User\UserPassword
+    public function build(): UserPassword
     {
-        return new \App\Shared\Domain\User\UserPassword($this->value);
+        return UserPassword::fromValue($this->value);
     }
 }

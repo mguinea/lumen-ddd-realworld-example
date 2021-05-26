@@ -6,6 +6,7 @@ namespace App\Auth\User\Domain;
 
 use App\Shared\Domain\DomainException;
 
-final class UserAlreadyRegistered extends DomainException
+final class TokenExpired extends DomainException
 {
+
 }

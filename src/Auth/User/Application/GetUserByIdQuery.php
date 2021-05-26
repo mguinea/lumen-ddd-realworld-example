@@ -8,11 +8,8 @@ use App\Shared\Domain\Bus\Query\Query;
 
 final class GetUserByIdQuery implements Query
 {
-    private string $id;
-
-    public function __construct(string $id)
+    public function __construct(private string $id)
     {
-        $this->id = $id;
     }
 
     public function id(): string
@@ -22,6 +19,6 @@ final class GetUserByIdQuery implements Query
 
     public function queryName(): string
     {
-        return 'realworld.auth.user.get_by_id';
+        return 'realworld.auth.user.get_by_id'; // TODO
     }
 }

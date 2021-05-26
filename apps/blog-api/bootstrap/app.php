@@ -93,8 +93,6 @@ $app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Blog\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Blog\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AppServiceProvider::class);
-$app->register(Apps\BlogApi\App\Providers\AuthServiceProvider::class);
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 
 /*

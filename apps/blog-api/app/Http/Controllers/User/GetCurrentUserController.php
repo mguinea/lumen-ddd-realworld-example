@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Apps\BlogApi\App\Http\Controllers\User;
 
 
-use App\Blog\User\Application\GetUserByIdQuery;
-use App\Blog\User\Application\ProfileResponse;
+use App\Blog\User\Application\GetCurrentUserQuery;
+use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Query\QueryBus;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -15,23 +15,20 @@ use Illuminate\Http\Response;
 
 final class GetCurrentUserController extends Controller
 {
-    /** @var QueryBus */
-    private $queryBus;
-
-    public function __construct(QueryBus $queryBus)
+    public function __construct(private QueryBus $queryBus)
     {
-        $this->queryBus = $queryBus;
     }
 
-    public function __invoke(Request $request, string $id): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
-        /** @var ProfileResponse $profileResponse */
-        $profileResponse = $this->queryBus->ask(
-            new GetUserByIdQuery($id)
+        /** @var UserResponse $userResponse */
+        $userResponse = $this->queryBus->ask(
+            new GetCurrentUserQuery($request->bearerToken())
         );
 
         return new JsonResponse(
-            $profileResponse->toArray(), Response::HTTP_OK
+            $userResponse->toArray(),
+            Response::HTTP_OK
         );
     }
 }

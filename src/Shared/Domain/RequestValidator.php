@@ -2,9 +2,7 @@
 
 namespace App\Shared\Domain;
 
-use Psr\Http\Message\RequestInterface;
-
 interface RequestValidator
 {
-    public function validate(RequestInterface $request, array $validations): void;
+    public function validate($request, array $rules, array $messages = [], array $customAttributes = []): void;
 }

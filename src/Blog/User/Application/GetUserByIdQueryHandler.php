@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace App\Blog\User\Application;
 
+use App\Blog\User\Domain\UserNotFound;
 use App\Blog\User\Domain\UserRepository;
 use App\Shared\Domain\Bus\Query\QueryHandler;
-use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\User\UserId;
 
 final class GetUserByIdQueryHandler implements QueryHandler
 {
-    private UserRepository $repository;
-
-    public function __construct(UserRepository $repository)
+    public function __construct(private UserRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function __invoke(GetUserByIdQuery $query): UserResponse
@@ -24,7 +21,7 @@ final class GetUserByIdQueryHandler implements QueryHandler
         $user = $this->repository->findById($id);
 
         if (null === $user) {
-            throw new \Exception('not found'); // TODO
+            throw new UserNotFound();
         }
 
         return UserResponse::fromPrimitives(

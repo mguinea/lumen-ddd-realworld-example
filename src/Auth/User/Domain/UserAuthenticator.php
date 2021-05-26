@@ -8,8 +8,6 @@ use App\Shared\Domain\User\UserToken;
 
 interface UserAuthenticator
 {
-    public function getCurrentUser(): ?User;
-
     public function logIn(UserEmail $email, UserPassword $password): ?UserToken;
 
     public function register(User $user): void;

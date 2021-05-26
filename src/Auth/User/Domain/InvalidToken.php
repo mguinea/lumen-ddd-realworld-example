@@ -6,7 +6,7 @@ namespace App\Auth\User\Domain;
 
 use App\Shared\Domain\DomainException;
 
-final class AuthorizationException extends DomainException
+final class InvalidToken extends DomainException
 {
 
 }

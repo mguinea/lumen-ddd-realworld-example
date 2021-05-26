@@ -39,7 +39,7 @@ migrate:
 	@docker exec -it -w /var/www/apps/blog-api realworld.blog.app php artisan migrate
 	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app php artisan migrate
 
-migrate-fresh: # TODO no va
+migrate-fresh:
 	@docker exec -it -w /var/www/apps/blog-api realworld.blog.app php artisan migrate:fresh
 	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app php artisan migrate:fresh
 
@@ -53,5 +53,5 @@ bash-auth:
 	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app bash
 
 .PHONY: tests
-tests:
-	@docker exec -it realworld.blog.app vendor/bin/phpunit apps/blog-api/tests --order-by=random --configuration=apps/blog-api/phpunit.xml
+tests-blog-auth:
+	@docker exec -it realworld.auth.app vendor/bin/phpunit apps/blog-auth/tests --order-by=random --configuration=apps/blog-auth/phpunit.xml

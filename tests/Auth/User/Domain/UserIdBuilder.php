@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Auth\User\Domain;
 
-use App\Auth\User\Domain\UserId;
+use App\Shared\Domain\User\UserId;
 use Faker\Factory;
 use Tests\Shared\Domain\Builder;
 
@@ -26,6 +26,6 @@ final class UserIdBuilder implements Builder
 
     public function build(): UserId
     {
-        return new UserId($this->value);
+        return UserId::fromValue($this->value);
     }
 }

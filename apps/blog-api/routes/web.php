@@ -10,8 +10,19 @@ $router->group(
         'prefix' => 'api/users'
     ],
     function (Router $router) {
-        $router->post('login', ['as' => 'log_in', 'uses' => 'LogInUserController']);
         $router->post('/', ['as' => 'register_user', 'uses' => 'RegisterUserController']);
-        $router->get('/{id}', ['as' => 'test', 'uses' => 'TestUserController']);
+        $router->post('login', ['as' => 'log_in', 'uses' => 'LogInUserController']);
+    }
+);
+
+$router->group(
+    [
+        'namespace' => 'User',
+        'prefix' => 'api/user',
+        'middleware' => 'auth'
+    ],
+    function (Router $router) {
+        $router->get('/', ['as' => 'get_current_user', 'uses' => 'GetCurrentUserController']);
+        //$router->put('login', ['as' => 'upadte_user', 'uses' => 'LogInUserController']);
     }
 );

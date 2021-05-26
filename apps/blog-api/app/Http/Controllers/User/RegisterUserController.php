@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\User;
 
-use App\Blog\User\Application\GetUserByIdQuery;
+use App\Blog\User\Application\LogInUserQuery;
 use App\Blog\User\Application\RegisterUserCommand;
 use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Command\CommandBus;
 use App\Shared\Domain\Bus\Query\QueryBus;
-use App\Shared\Domain\User\UserId;
+use App\Shared\Domain\UuidGenerator;
 use Apps\BlogApi\App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,15 +17,11 @@ use Illuminate\Http\Response;
 
 final class RegisterUserController extends Controller
 {
-    private CommandBus $commandBus;
-    private QueryBus $queryBus;
-
     public function __construct(
-        CommandBus $commandBus,
-        QueryBus $queryBus
+        private CommandBus $commandBus,
+        private QueryBus $queryBus,
+        private UuidGenerator $generator
     ) {
-        $this->commandBus = $commandBus;
-        $this->queryBus = $queryBus;
     }
 
     public function __invoke(Request $request): JsonResponse
@@ -38,11 +34,11 @@ final class RegisterUserController extends Controller
 
         $userData = $request->get('user');
 
-        $id = UserId::create();
+        $id = $this->generator->generate();
 
         $this->commandBus->dispatch(
             new RegisterUserCommand(
-                $id->value(),
+                $id,
                 $userData['username'],
                 $userData['email'],
                 $userData['password']
@@ -51,8 +47,9 @@ final class RegisterUserController extends Controller
 
         /** @var UserResponse $userResponse */
         $userResponse = $this->queryBus->ask(
-            new GetUserByIdQuery(
-                $id->value()
+            new LogInUserQuery(
+                $userData['email'],
+                $userData['password']
             )
         );
 
