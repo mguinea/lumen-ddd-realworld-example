@@ -53,5 +53,8 @@ bash-auth:
 	@docker exec -it -w /var/www/apps/blog-auth realworld.auth.app bash
 
 .PHONY: tests
+tests:
+	@make tests-blog-auth
+
 tests-blog-auth:
 	@docker exec -it realworld.auth.app vendor/bin/phpunit apps/blog-auth/tests --order-by=random --configuration=apps/blog-auth/phpunit.xml
