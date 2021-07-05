@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Blog\User\Application;
 
-use App\Blog\User\Domain\User;
 use App\Shared\Domain\Bus\Query\Response;
 
 final class UserResponse implements Response
 {
     public function __construct(
+        private string $id,
         private string $email,
         private ?string $token,
         private string $username,
@@ -19,6 +19,7 @@ final class UserResponse implements Response
     }
 
     public static function fromPrimitives(
+        string $id,
         string $email,
         ?string $token,
         string $username,
@@ -26,12 +27,18 @@ final class UserResponse implements Response
         ?string $image
     ): self {
         return new self(
+            $id,
             $email,
             $token,
             $username,
             $bio,
             $image
         );
+    }
+
+    public function id(): string
+    {
+        return $this->id;
     }
 
     public function email(): string

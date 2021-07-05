@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Blog\Article\Domain;
 
-use DateTimeImmutable;
+use App\Shared\Domain\ValueObject\DateTimeValueObject;
 
-final class ArticleUpdatedAt extends DateTimeImmutable
+final class ArticleUpdatedAt extends DateTimeValueObject
 {
 
 }

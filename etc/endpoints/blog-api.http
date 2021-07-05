@@ -40,3 +40,8 @@ Content-Type: application/json;
         "image": "https://i.stack.imgur.com/xHWG8.jpg"
     }
 }
+
+###
+# 5 Get article by slug
+GET localhost:8880/api/articles/test
+Content-Type: application/json;

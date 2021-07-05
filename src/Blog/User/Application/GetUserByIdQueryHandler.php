@@ -25,6 +25,7 @@ final class GetUserByIdQueryHandler implements QueryHandler
         }
 
         return UserResponse::fromPrimitives(
+            $user->id()->value(),
             $user->email()->value(),
             null,
             $user->name()->value(),

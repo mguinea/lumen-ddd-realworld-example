@@ -92,8 +92,8 @@ $app->routeMiddleware(
 $app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Blog\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(App\Blog\User\Infrastructure\Lumen\UserServiceProvider::class);
+$app->register(App\Blog\Article\Infrastructure\Lumen\ArticleServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AppServiceProvider::class);
-
 
 /*
 |--------------------------------------------------------------------------

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\ValueObject;
 
-abstract class EmailValueObject extends StringValueObject
+abstract class EmailValueObject extends NullableStringValueObject
 {
     public function __construct(string $value)
     {

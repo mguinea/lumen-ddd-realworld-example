@@ -2,13 +2,13 @@
 
 namespace Apps\BlogApi\App\Exceptions;
 
-use App\Auth\User\Domain\AuthenticationException;
-use App\Auth\User\Domain\UserAlreadyRegistered;
 use App\Shared\Domain\NotFoundException;
 use App\Shared\Domain\ValueObject\NotValidValueObjectException;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -23,10 +23,9 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        // AuthorizationException::class,
-        // HttpException::class,
-        // ModelNotFoundException::class,
-        // ValidationException::class,
+        HttpException::class,
+        ModelNotFoundException::class,
+        ValidationException::class,
     ];
 
     /**
@@ -46,20 +45,17 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        $errors = [];
-
-        if (true === config('app.debug') && 'production' !== env('APP_ENV')) {
-            $errors['exception'] = get_class($e);
+        if ($e instanceof ValidationException && $e->getResponse()) {
+            $errors['errors'] = json_decode($e->getResponse()->getContent(), true);
+        } else {
+            $errors['errors'] = $e->getMessage();
         }
 
-        if (true === property_exists($e, 'field')) {
-            $errors['errors'] = [
-                $e->field() => $e->getMessage()
-            ];
-        } else {
-            $errors['errors'] = [
-                'message' => $e->getMessage()
-            ];
+        if (true === config('app.debug')) {
+            $errors['code'] = $e->getCode();
+            $errors['line'] = $e->getLine();
+            $errors['file'] = $e->getFile();
+            $errors['exception'] = (string)$e;
         }
 
         return $this->handleException($e, $errors);
@@ -67,6 +63,10 @@ class Handler extends ExceptionHandler
 
     private function handleException(Throwable $e, array $errors = []): JsonResponse
     {
+        if ($e instanceof ValidationException) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         if ($e instanceof NotValidValueObjectException) {
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
@@ -79,22 +79,14 @@ class Handler extends ExceptionHandler
             return new JsonResponse($errors, Response::HTTP_NOT_FOUND);
         }
 
-        if ($e instanceof AuthenticationException) {
-            return new JsonResponse('Not authorized', Response::HTTP_UNAUTHORIZED);
-        }
-
-        if ($e instanceof UserAlreadyRegistered) {
-            return new JsonResponse('User already registered', Response::HTTP_BAD_REQUEST);
-        }
-
         if ($e instanceof MethodNotAllowedHttpException) {
-            return new JsonResponse('Method not allowed', Response::HTTP_METHOD_NOT_ALLOWED);
+            return new JsonResponse($errors, Response::HTTP_METHOD_NOT_ALLOWED);
         }
 
         if ($e instanceof HttpException) {
-            return new JsonResponse($e->getMessage(), $e->getStatusCode());
+            return new JsonResponse($errors, $e->getStatusCode());
         }
 
-        return new JsonResponse($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new JsonResponse($errors, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

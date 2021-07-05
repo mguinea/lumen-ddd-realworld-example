@@ -4,101 +4,117 @@ declare(strict_types=1);
 
 namespace App\Blog\Article\Domain;
 
-use App\Blog\Shared\Domain\User\User;
-use App\Blog\Shared\Domain\Tag\Tags;
+use App\Shared\Domain\AggregateRoot;
 
-final class Article
+final class Article extends AggregateRoot
 {
-    private ArticleId $id;
-    private ArticleSlug $slug;
-    private ArticleTitle $title;
-    private ArticleDescription $description;
-    private ArticleBody $body;
-    private Tags $tags;
-    private ArticleCreatedAt $createdAt;
-    private ArticleUpdatedAt $updatedAt;
-    private ArticleFavourited $favorited;
-    private ArticleFavoritesCount $favoritesCount;
-    private User $author;
-
     public function __construct(
+        private ArticleId $id,
+        private ArticleSlug $slug,
+        private ArticleTitle $title,
+        private ArticleDescription $description,
+        private ArticleBody $body,
+        private ArticleCreatedAt $createdAt,
+        private ArticleUpdatedAt $updatedAt,
+        private ArticleFavourited $favourited,
+        private ArticleFavoritesCount $favoritesCount
+    ) {
+    }
+
+    public static function create(
         ArticleId $id,
         ArticleSlug $slug,
         ArticleTitle $title,
         ArticleDescription $description,
         ArticleBody $body,
-        Tags $tags,
         ArticleCreatedAt $createdAt,
         ArticleUpdatedAt $updatedAt,
-        ArticleFavourited $favorited,
-        ArticleFavoritesCount $favoritesCount,
-        User $author
-    ) {
-        $this->id = $id;
-        $this->slug = $slug;
-        $this->title = $title;
-        $this->description = $description;
-        $this->body = $body;
-        $this->tags = $tags;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
-        $this->favorited = $favorited;
-        $this->favoritesCount = $favoritesCount;
-        $this->author = $author;
+        ArticleFavourited $favourited,
+        ArticleFavoritesCount $favoritesCount
+    ): self {
+        $article = new self(
+            $id,
+            $slug,
+            $title,
+            $description,
+            $body,
+            $createdAt,
+            $updatedAt,
+            $favourited,
+            $favoritesCount
+        );
+
+        // $article->record(ArticleWasCreated::fromArticle($article));
+
+        return $article;
     }
-    
+
+    public static function fromPrimitives(
+        string $id,
+        string $slug,
+        string $title,
+        string $description,
+        string $body,
+        string $createdAt,
+        string $updatedAt,
+        bool $favourited,
+        int $favoritesCount
+    ): self {
+        return new self(
+            ArticleId::fromValue($id),
+            ArticleSlug::fromValue($slug),
+            ArticleTitle::fromValue($title),
+            ArticleDescription::fromValue($description),
+            ArticleBody::fromValue($body),
+            ArticleCreatedAt::fromValue($createdAt),
+            ArticleUpdatedAt::fromValue($updatedAt),
+            ArticleFavourited::fromValue($favourited),
+            ArticleFavoritesCount::fromValue($favoritesCount)
+        );
+    }
+
     public function id(): ArticleId
     {
         return $this->id;
     }
-    
+
     public function slug(): ArticleSlug
     {
         return $this->slug;
     }
-    
+
     public function title(): ArticleTitle
     {
         return $this->title;
     }
-    
+
     public function description(): ArticleDescription
     {
         return $this->description;
     }
-    
+
     public function body(): ArticleBody
     {
         return $this->body;
     }
-    
-    public function tags(): Tags
-    {
-        return $this->tags;
-    }
-    
+
     public function createdAt(): ArticleCreatedAt
     {
         return $this->createdAt;
     }
-    
+
     public function updatedAt(): ArticleUpdatedAt
     {
         return $this->updatedAt;
     }
-    
-    public function favorited(): ArticleFavourited
+
+    public function favourited(): ArticleFavourited
     {
-        return $this->favorited;
+        return $this->favourited;
     }
-    
+
     public function favoritesCount(): ArticleFavoritesCount
     {
         return $this->favoritesCount;
-    }
-    
-    public function author(): User
-    {
-        return $this->author;
     }
 }

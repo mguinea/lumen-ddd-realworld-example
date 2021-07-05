@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Apps\BlogApi\App\Http\Controllers\User;
 
-
 use App\Blog\User\Application\GetCurrentUserQuery;
 use App\Blog\User\Application\UserResponse;
 use App\Shared\Domain\Bus\Query\QueryBus;

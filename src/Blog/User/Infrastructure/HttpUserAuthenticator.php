@@ -20,6 +20,16 @@ final class HttpUserAuthenticator implements UserAuthenticator
         $this->http = $http;
     }
 
+    public function register(UserId $id, UserEmail $email, UserPassword $password): void
+    {
+        // TODO url from env
+        $this->http->post('realworld.auth.app:8879/auth/api/users', [
+            'id' => $id->value(),
+            'email' => $email->value(),
+            'password' => $password->value()
+        ]);
+    }
+
     public function logIn(UserEmail $email, UserPassword $password): ?UserToken
     {
         // TODO url from env
@@ -44,5 +54,17 @@ final class HttpUserAuthenticator implements UserAuthenticator
         $response = $this->http->post('realworld.auth.app:8879/auth/api/tokens/validate', $payload);
 
         return UserId::fromValue($response->json('token')['id']);
+    }
+
+    public function update(UserId $id, UserEmail $email, UserPassword $password): void
+    {
+        $this->http->put(
+            'realworld.auth.app:8879/auth/api/users',
+            [
+                'id' => $id->value(),
+                'email' => $email->value(),
+                'password' => $password->value()
+            ]
+        );
     }
 }

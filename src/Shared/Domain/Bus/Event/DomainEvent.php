@@ -12,7 +12,7 @@ abstract class DomainEvent
     private string $eventId;
     private string $occurredOn;
 
-    public function __construct(private string $aggregateId, string $eventId = null, string $occurredOn = null)
+    public function __construct(protected string $aggregateId, string $eventId = null, string $occurredOn = null)
     {
         $this->eventId    = $eventId ?: UuidValueObject::create()->value();
         $this->occurredOn = $occurredOn ?: (new DateTimeImmutable('now'))->format("Y-m-d h:i:s");

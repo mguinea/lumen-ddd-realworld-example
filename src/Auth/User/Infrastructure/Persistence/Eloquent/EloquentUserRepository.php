@@ -12,11 +12,8 @@ use Illuminate\Hashing\BcryptHasher;
 
 final class EloquentUserRepository implements UserRepository
 {
-    private User $model;
-
-    public function __construct(User $model)
+    public function __construct(private User $model)
     {
-        $this->model = $model;
     }
 
     public function findByEmail(UserEmail $email): ?DomainUser

@@ -92,4 +92,19 @@ final class User extends AggregateRoot
     {
         return $this->image;
     }
+
+    public function update(
+        UserName $name,
+        UserEmail $email,
+        UserPassword $password,
+        UserBio $bio,
+        UserImage $image
+    ): void {
+        $this->name = null === $name->value() ? $this->name : $name;
+        $this->email = null === $email->value() ? $this->email : $email;
+        $this->bio = null === $bio->value() ? $this->bio : $bio;
+        $this->image = null === $image->value() ? $this->image : $image;
+
+        $this->record(UserWasUpdated::fromUser($this, $password));
+    }
 }

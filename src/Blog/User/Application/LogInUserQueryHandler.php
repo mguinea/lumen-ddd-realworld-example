@@ -33,6 +33,7 @@ final class LogInUserQueryHandler implements QueryHandler
         $token = $this->authenticator->logIn($email, $password);
 
         return UserResponse::fromPrimitives(
+            $user->id()->value(),
             $email->value(),
             $token->value(),
             $user->name()->value(),

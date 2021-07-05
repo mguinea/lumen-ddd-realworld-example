@@ -30,6 +30,7 @@ final class GetCurrentUserQueryHandler implements QueryHandler
         }
 
         return UserResponse::fromPrimitives(
+            $user->id()->value(),
             $user->email()->value(),
             $token->value(),
             $user->name()->value(),

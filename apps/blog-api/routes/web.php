@@ -23,6 +23,27 @@ $router->group(
     ],
     function (Router $router) {
         $router->get('/', ['as' => 'get_current_user', 'uses' => 'GetCurrentUserController']);
-        //$router->put('login', ['as' => 'upadte_user', 'uses' => 'LogInUserController']);
+        $router->put('/', ['as' => 'update_user', 'uses' => 'UpdateUserController']);
+    }
+);
+
+$router->group(
+    [
+        'namespace' => 'Article',
+        'prefix' => 'api/articles'
+    ],
+    function (Router $router) {
+        $router->get('{slug}', ['as' => 'get_article_by_slug', 'uses' => 'GetArticleBySlugController']);
+    }
+);
+
+$router->group(
+    [
+        'namespace' => 'Article',
+        'prefix' => 'api/articles',
+        //'middleware' => 'auth'
+    ],
+    function (Router $router) {
+        $router->post('/', ['as' => 'create_article', 'uses' => 'CreateArticleController']);
     }
 );
