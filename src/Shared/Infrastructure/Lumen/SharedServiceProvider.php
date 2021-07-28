@@ -7,6 +7,7 @@ namespace App\Shared\Infrastructure\Lumen;
 use App\Shared\Domain\Bus\Command\CommandBus as CommandBusInterface;
 use App\Shared\Domain\Bus\Event\EventBus as EventBusInterface;
 use App\Shared\Domain\Bus\Query\QueryBus as QueryBusInterface;
+use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\RequestValidator;
 use App\Shared\Domain\UuidGenerator;
 use App\Shared\Infrastructure\Bus\Messenger\MessengerCommandBus;
@@ -26,21 +27,21 @@ final class SharedServiceProvider extends ServiceProvider
         $this->app->bind(
             EventBusInterface::class,
             function (Application $app) {
-                return new MessengerEventBus($app->tagged('realworld.domain_event_subscriber'));
+                return new MessengerEventBus($app->tagged('domain_event_subscriber'));
             }
         );
 
         $this->app->bind(
             QueryBusInterface::class,
             function (Application $app) {
-                return new MessengerQueryBus($app->tagged('realworld.query_handler'));
+                return new MessengerQueryBus($app->tagged('query_handler'));
             }
         );
 
         $this->app->bind(
             CommandBusInterface::class,
             function (Application $app) {
-                return new MessengerCommandBus($app->tagged('realworld.command_handler'));
+                return new MessengerCommandBus($app->tagged('command_handler'));
             }
         );
 

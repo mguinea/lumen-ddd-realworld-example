@@ -33,6 +33,7 @@ $router->group(
         'prefix' => 'api/articles'
     ],
     function (Router $router) {
+        $router->get('/', ['as' => 'search_articles', 'uses' => 'SearchArticlesController']);
         $router->get('{slug}', ['as' => 'get_article_by_slug', 'uses' => 'GetArticleBySlugController']);
     }
 );

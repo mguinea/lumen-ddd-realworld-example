@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Blog\Article\Infrastructure\Lumen;
 
 use App\Blog\Article\Application\CreateArticleCommandHandler;
+use App\Blog\Article\Application\GetArticleByIdQueryHandler;
 use App\Blog\Article\Application\GetArticleBySlugQueryHandler;
+use App\Blog\Article\Application\SearchArticlesQueryHandler;
 use App\Blog\Article\Domain\ArticleRepository;
-use App\Blog\Article\Infrastructure\Persistence\Eloquent\EloquentArticleRepository;
+use App\Blog\Article\Infrastructure\Persistence\ArticleRepository as ConcreteArticleRepository;
 use Illuminate\Support\ServiceProvider;
 
 final class ArticleServiceProvider extends ServiceProvider
@@ -21,17 +23,27 @@ final class ArticleServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             ArticleRepository::class,
-            EloquentArticleRepository::class
+            ConcreteArticleRepository::class
         );
 
         $this->app->tag(
             CreateArticleCommandHandler::class,
-            'realworld.command_handler'
+            'command_handler'
+        );
+
+        $this->app->tag(
+            GetArticleByIdQueryHandler::class,
+            'query_handler'
         );
 
         $this->app->tag(
             GetArticleBySlugQueryHandler::class,
-            'realworld.query_handler'
+            'query_handler'
+        );
+
+        $this->app->tag(
+            SearchArticlesQueryHandler::class,
+            'query_handler'
         );
     }
 }

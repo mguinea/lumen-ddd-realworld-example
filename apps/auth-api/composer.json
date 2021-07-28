@@ -1,0 +1,19 @@
+{
+  "name": "apps/auth-api",
+  "description": "The Auth API powered by Laravel Lumen Framework.",
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Apps\\AuthApi\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Apps\\AuthApi\\Tests\\": "tests/"
+    }
+  }
+}

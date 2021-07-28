@@ -26,7 +26,7 @@ final class ArticleWasCreated extends DomainEvent
 
     public function eventName(): string
     {
-        // TODO: Implement eventName() method.
+        return 'blog.article_was_created';
     }
 
     public function toPrimitives(): array

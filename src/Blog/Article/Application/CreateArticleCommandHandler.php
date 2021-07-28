@@ -4,28 +4,33 @@ declare(strict_types=1);
 
 namespace App\Blog\Article\Application;
 
-use App\Blog\Article\Domain\Article;
+use App\Blog\Article\Domain\ArticleBody;
+use App\Blog\Article\Domain\ArticleDescription;
 use App\Blog\Article\Domain\ArticleId;
-use App\Blog\Article\Domain\ArticleRepository;
+use App\Blog\Article\Domain\ArticleTitle;
+use App\Blog\Shared\Domain\Tag\Tags;
 use App\Shared\Domain\Bus\Command\CommandHandler;
-use App\Shared\Domain\Bus\Event\EventBus;
 
 final class CreateArticleCommandHandler implements CommandHandler
 {
-    public function __construct(
-        private ArticleRepository $repository,
-        private EventBus $eventBus
-    )
+    public function __construct(private CreateArticle $createArticle)
     {
     }
 
     public function __invoke(CreateArticleCommand $command): void
     {
-        $article = Article::create(
-            ArticleId::fromValue($command->id()),
-        );
+        $id = ArticleId::fromValue($command->id());
+        $title = ArticleTitle::fromValue($command->title());
+        $description = ArticleDescription::fromValue($command->description());
+        $body = ArticleBody::fromValue($command->body());
+        $tagList = Tags::create();
 
-        $this->repository->save($article);
-        $this->eventBus->publish(...$article->pullDomainEvents());
+        $this->createArticle->__invoke(
+            $id,
+            $title,
+            $description,
+            $body,
+            $tagList
+        );
     }
 }

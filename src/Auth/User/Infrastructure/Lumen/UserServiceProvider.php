@@ -44,22 +44,22 @@ class UserServiceProvider extends ServiceProvider
 
         $this->app->tag(
             GetUserByIdQueryHandler::class,
-            'realworld.query_handler'
+            'query_handler'
         );
 
         $this->app->tag(
             LogInUserQueryHandler::class,
-            'realworld.query_handler'
+            'query_handler'
         );
 
         $this->app->tag(
             TokenValidationQueryHandler::class,
-            'realworld.query_handler'
+            'query_handler'
         );
 
         $this->app->tag(
             RegisterUserCommandHandler::class,
-            'realworld.command_handler'
+            'command_handler'
         );
     }
 }

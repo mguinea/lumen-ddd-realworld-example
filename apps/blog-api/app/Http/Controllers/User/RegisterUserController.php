@@ -26,11 +26,11 @@ final class RegisterUserController extends Controller
 
     public function __invoke(Request $request): JsonResponse
     {
-        // TODO $this->validate($request, [
-        // TODO     'user.email' => 'required|email|unique:mysql_blog.users,email',
-        // TODO     'user.username' => 'required',
-        // TODO     'user.password' => 'required'
-        // TODO ]);
+        $this->validate($request, [
+            'user.email' => 'required|email',
+            'user.username' => 'required',
+            'user.password' => 'required'
+        ]);
 
         $userData = $request->get('user');
 

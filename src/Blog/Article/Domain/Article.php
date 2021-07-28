@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Blog\Article\Domain;
 
+use App\Blog\Shared\Domain\Tag\Tags;
 use App\Shared\Domain\AggregateRoot;
 
 final class Article extends AggregateRoot
@@ -17,34 +18,34 @@ final class Article extends AggregateRoot
         private ArticleCreatedAt $createdAt,
         private ArticleUpdatedAt $updatedAt,
         private ArticleFavourited $favourited,
-        private ArticleFavoritesCount $favoritesCount
+        private ArticleFavoritesCount $favoritesCount,
+        private Tags $tags
     ) {
     }
 
     public static function create(
         ArticleId $id,
-        ArticleSlug $slug,
         ArticleTitle $title,
         ArticleDescription $description,
         ArticleBody $body,
-        ArticleCreatedAt $createdAt,
-        ArticleUpdatedAt $updatedAt,
-        ArticleFavourited $favourited,
-        ArticleFavoritesCount $favoritesCount
+        Tags $tags
     ): self {
+        $slug = ArticleSlug::fromTitle($title);
+
         $article = new self(
             $id,
             $slug,
             $title,
             $description,
             $body,
-            $createdAt,
-            $updatedAt,
-            $favourited,
-            $favoritesCount
+            ArticleCreatedAt::fromValue('now'),
+            ArticleUpdatedAt::fromValue('now'),
+            ArticleFavourited::fromValue(false),
+            ArticleFavoritesCount::fromValue(0),
+            $tags
         );
 
-        // $article->record(ArticleWasCreated::fromArticle($article));
+        $article->record(ArticleWasCreated::fromArticle($article));
 
         return $article;
     }
@@ -58,7 +59,8 @@ final class Article extends AggregateRoot
         string $createdAt,
         string $updatedAt,
         bool $favourited,
-        int $favoritesCount
+        int $favoritesCount,
+        array $tags
     ): self {
         return new self(
             ArticleId::fromValue($id),
@@ -69,7 +71,8 @@ final class Article extends AggregateRoot
             ArticleCreatedAt::fromValue($createdAt),
             ArticleUpdatedAt::fromValue($updatedAt),
             ArticleFavourited::fromValue($favourited),
-            ArticleFavoritesCount::fromValue($favoritesCount)
+            ArticleFavoritesCount::fromValue($favoritesCount),
+            Tags::create($tags)
         );
     }
 
@@ -116,5 +119,10 @@ final class Article extends AggregateRoot
     public function favoritesCount(): ArticleFavoritesCount
     {
         return $this->favoritesCount;
+    }
+
+    public function tags(): Tags
+    {
+        return $this->tags;
     }
 }
