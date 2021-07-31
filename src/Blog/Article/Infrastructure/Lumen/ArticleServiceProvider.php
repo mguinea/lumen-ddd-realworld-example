@@ -14,11 +14,6 @@ use Illuminate\Support\ServiceProvider;
 
 final class ArticleServiceProvider extends ServiceProvider
 {
-    public function boot()
-    {
-        $this->loadMigrationsFrom(__DIR__ . '/../Persistence/Lumen/database/migrations');
-    }
-
     public function register()
     {
         $this->app->bind(

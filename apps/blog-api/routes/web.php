@@ -48,3 +48,13 @@ $router->group(
         $router->post('/', ['as' => 'create_article', 'uses' => 'CreateArticleController']);
     }
 );
+
+$router->group(
+    [
+        'namespace' => 'Tag',
+        'prefix' => 'api/tags'
+    ],
+    function (Router $router) {
+        $router->get('/', ['as' => 'list_tags', 'uses' => 'ListTagsController']);
+    }
+);

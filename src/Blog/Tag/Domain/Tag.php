@@ -15,6 +15,14 @@ final class Tag
         $this->value = $value;
     }
 
+    public static function fromPrimitives(string $id, string $value): self
+    {
+        return new self(
+            TagId::fromValue($id),
+            TagValue::fromValue($value)
+        );
+    }
+
     public function id(): TagId
     {
         return $this->id;

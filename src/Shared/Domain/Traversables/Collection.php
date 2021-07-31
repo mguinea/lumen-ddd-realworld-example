@@ -37,7 +37,7 @@ abstract class Collection implements CollectionInterface, CollectionAccessInterf
     /**
      * @throws InvalidCollectionObjectException
      */
-    public static function create(array $items = []): CollectionInterface
+    public static function create(array $items = []): static
     {
         return new static($items);
     }

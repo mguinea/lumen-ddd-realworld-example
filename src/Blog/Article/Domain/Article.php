@@ -6,6 +6,7 @@ namespace App\Blog\Article\Domain;
 
 use App\Blog\Shared\Domain\Tag\Tags;
 use App\Shared\Domain\AggregateRoot;
+use App\Shared\Domain\User\UserId;
 
 final class Article extends AggregateRoot
 {
@@ -19,7 +20,8 @@ final class Article extends AggregateRoot
         private ArticleUpdatedAt $updatedAt,
         private ArticleFavourited $favourited,
         private ArticleFavoritesCount $favoritesCount,
-        private Tags $tags
+        private Tags $tags,
+        private UserId $authorId
     ) {
     }
 
@@ -28,7 +30,8 @@ final class Article extends AggregateRoot
         ArticleTitle $title,
         ArticleDescription $description,
         ArticleBody $body,
-        Tags $tags
+        Tags $tags,
+        UserId $authorId
     ): self {
         $slug = ArticleSlug::fromTitle($title);
 
@@ -42,7 +45,8 @@ final class Article extends AggregateRoot
             ArticleUpdatedAt::fromValue('now'),
             ArticleFavourited::fromValue(false),
             ArticleFavoritesCount::fromValue(0),
-            $tags
+            $tags,
+            $authorId
         );
 
         $article->record(ArticleWasCreated::fromArticle($article));
@@ -60,7 +64,8 @@ final class Article extends AggregateRoot
         string $updatedAt,
         bool $favourited,
         int $favoritesCount,
-        array $tags
+        array $tags,
+        string $authorId
     ): self {
         return new self(
             ArticleId::fromValue($id),
@@ -72,7 +77,8 @@ final class Article extends AggregateRoot
             ArticleUpdatedAt::fromValue($updatedAt),
             ArticleFavourited::fromValue($favourited),
             ArticleFavoritesCount::fromValue($favoritesCount),
-            Tags::create($tags)
+            Tags::create($tags),
+            UserId::fromValue($authorId)
         );
     }
 
@@ -124,5 +130,10 @@ final class Article extends AggregateRoot
     public function tags(): Tags
     {
         return $this->tags;
+    }
+
+    public function authorId(): UserId
+    {
+        return $this->authorId;
     }
 }

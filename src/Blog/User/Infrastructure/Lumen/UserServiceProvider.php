@@ -20,8 +20,6 @@ final class UserServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        parent::register();
-
         $this->app->bind(
             UserRepository::class,
             EloquentUserRepository::class

@@ -11,24 +11,13 @@ use App\Shared\Domain\User\UserPassword;
 
 final class User extends AggregateRoot
 {
-    private UserId $id;
-    private UserName $name;
-    private UserEmail $email;
-    private UserBio $bio;
-    private UserImage $image;
-
     public function __construct(
-        UserId $id,
-        UserName $name,
-        UserEmail $email,
-        UserBio $bio,
-        UserImage $image
+        private UserId $id,
+        private UserName $name,
+        private UserEmail $email,
+        private UserBio $bio,
+        private UserImage $image
     ) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-        $this->bio = $bio;
-        $this->image = $image;
     }
 
     public static function fromPrimitives(

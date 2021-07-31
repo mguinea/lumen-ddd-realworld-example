@@ -4,28 +4,18 @@ declare(strict_types=1);
 
 namespace App\Blog\Comment\Domain;
 
-use App\Blog\Shared\Domain\User\User;
+
+use App\Shared\Domain\User\UserId;
 
 final class Comment
 {
-    private CommentId $id;
-    private CommentBody $body;
-    private User $author;
-    private CommentCreatedAt $createdAt;
-    private CommentUpdatedAt $updatedAt;
-
     public function __construct(
-        CommentId $id,
-        CommentBody $body,
-        User $author,
-        CommentCreatedAt $createdAt,
-        CommentUpdatedAt $updatedAt
+        private CommentId $id,
+        private CommentBody $body,
+        private UserId $authorId,
+        private CommentCreatedAt $createdAt,
+        private CommentUpdatedAt $updatedAt
     ) {
-        $this->id = $id;
-        $this->body = $body;
-        $this->author = $author;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
     }
 
     public function id(): CommentId
@@ -38,9 +28,9 @@ final class Comment
         return $this->body;
     }
 
-    public function author(): User
+    public function authorId(): UserId
     {
-        return $this->author;
+        return $this->authorId;
     }
 
     public function createdAt(): CommentCreatedAt

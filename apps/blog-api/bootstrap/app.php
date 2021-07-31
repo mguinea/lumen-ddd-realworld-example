@@ -57,7 +57,7 @@ $app->singleton(
 |
 */
 
-$app->configure('app');
+// $app->configure('app');
 $app->configure('auth');
 $app->configure('database');
 
@@ -89,10 +89,12 @@ $app->routeMiddleware(
 |
 */
 
-$app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
-$app->register(App\Blog\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
-$app->register(App\Blog\User\Infrastructure\Lumen\UserServiceProvider::class);
 $app->register(App\Blog\Article\Infrastructure\Lumen\ArticleServiceProvider::class);
+$app->register(App\Blog\Comment\Infrastructure\Lumen\CommentServiceProvider::class);
+$app->register(App\Blog\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
+$app->register(App\Blog\Tag\Infrastructure\Lumen\TagServiceProvider::class);
+$app->register(App\Blog\User\Infrastructure\Lumen\UserServiceProvider::class);
+$app->register(App\Shared\Infrastructure\Lumen\SharedServiceProvider::class);
 $app->register(Apps\BlogApi\App\Providers\AppServiceProvider::class);
 
 /*

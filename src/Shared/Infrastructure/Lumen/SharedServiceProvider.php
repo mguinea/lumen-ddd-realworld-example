@@ -22,8 +22,6 @@ final class SharedServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        parent::register();
-
         $this->app->bind(
             EventBusInterface::class,
             function (Application $app) {
