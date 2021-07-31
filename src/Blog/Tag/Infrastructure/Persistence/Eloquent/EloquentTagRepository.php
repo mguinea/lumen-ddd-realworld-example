@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Blog\Tag\Infrastructure\Persistence\Eloquent;
 
+use App\Blog\Tag\Domain\Tag as DomainTag;
 use App\Blog\Shared\Domain\Tag\Tags;
 use App\Blog\Tag\Domain\TagRepository;
 
@@ -18,7 +19,7 @@ final class EloquentTagRepository implements TagRepository
         $eloquentTags = $this->eloquentTag->all();
 
         $tags = $eloquentTags->map(function(Tag $eloquentTag) {
-            return \App\Blog\Tag\Domain\Tag::fromPrimitives(
+            return DomainTag::fromPrimitives(
                 $eloquentTag->id,
                 $eloquentTag->value
             );
