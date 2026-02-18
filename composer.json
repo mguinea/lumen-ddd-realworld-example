@@ -24,7 +24,7 @@
   ],
   "require": {
     "elasticsearch/elasticsearch": "^7.0",
-    "firebase/php-jwt": "^5.2",
+    "firebase/php-jwt": "^7.0",
     "guzzlehttp/guzzle": "^7.3",
     "lambdish/phunctional": "^2.0",
     "laravel/lumen-framework": "^8.0",
